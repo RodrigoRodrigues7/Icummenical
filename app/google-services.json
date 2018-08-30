@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "1047105331592",
+    "firebase_url": "https://icummenical.firebaseio.com",
+    "project_id": "icummenical",
+    "storage_bucket": "icummenical.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1047105331592:android:3e02a0d2d8e5983c",
+        "android_client_info": {
+          "package_name": "com.example.android.icummenical"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1047105331592-40ogubt47tbmqkqkcap646qprbdi2peb.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.android.icummenical",
+            "certificate_hash": "a0c1b1a21d63e5e380f505be1a16ff418b8f1909"
+          }
+        },
+        {
+          "client_id": "1047105331592-tt107orfjsfi78srp4c1s6gq4kte52pe.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDQ0jkYYl-6L6sYHVTwZ2ro2R3-RHkJWig"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1047105331592-tt107orfjsfi78srp4c1s6gq4kte52pe.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
