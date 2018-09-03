@@ -13,20 +13,22 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.example.android.icummenical.R;
+import com.google.firebase.auth.FirebaseAuth;
 
-public class PrincipalActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+public class PrincipalActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+
+    private FirebaseAuth auth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_principal);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -36,6 +38,8 @@ public class PrincipalActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        auth = FirebaseAuth.getInstance();
     }
 
     @Override
@@ -50,21 +54,20 @@ public class PrincipalActivity extends AppCompatActivity
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
+
         getMenuInflater().inflate(R.menu.principal, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
+
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             return true;
+        } else if (id == R.id.action_SignOut) {
+            signOut();
         }
 
         return super.onOptionsItemSelected(item);
@@ -77,7 +80,7 @@ public class PrincipalActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_loc) {
-            Intent i = new Intent(PrincipalActivity.this,MapsActivity.class);
+            Intent i = new Intent(PrincipalActivity.this, MapsActivity.class);
             startActivity(i);
         } else if (id == R.id.nav_gallery) {
 
@@ -95,4 +98,15 @@ public class PrincipalActivity extends AppCompatActivity
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+
+    //Método para deslogar do aplicativo
+    public void signOut() {
+
+        auth.signOut();
+
+        Intent intent = new Intent(PrincipalActivity.this, LoginActivity.class);
+        startActivity(intent);
+        finish();
+    }
+
 }

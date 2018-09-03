@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import com.example.android.icummenical.Classes.Usuario;
 import com.example.android.icummenical.DAO.ConfigFirebase;
+import com.example.android.icummenical.Helper.Preferences;
 import com.example.android.icummenical.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -26,14 +27,14 @@ public class LoginActivity extends AppCompatActivity {
     private Button btnLogin;
     private ProgressBar progressBar;
 
-    //Classe do Firebase para autenticação
+    //Classe do Firebase para Autenticação
     private FirebaseAuth auth;
     private Usuario usuario;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_login);
 
         edtEmail = findViewById(R.id.edt_emailLogin);
         edtSenha = findViewById(R.id.edt_senhaLogin);
@@ -43,9 +44,9 @@ public class LoginActivity extends AppCompatActivity {
         progressBar.setVisibility(View.GONE);
 
         // Verificando se o usuário já está logado
-       if (verificarUsuarioLogado()) {
+        if (verificarUsuarioLogado()) {
 
-           Intent intent = new Intent(LoginActivity.this, PrincipalActivity.class);
+            Intent intent = new Intent(LoginActivity.this, PrincipalActivity.class);
             startActivity(intent);
 
         } else {
@@ -62,6 +63,7 @@ public class LoginActivity extends AppCompatActivity {
                         usuario.setSenha(edtSenha.getText().toString());
 
                         validarLogin();
+                        btnLogin.setVisibility(View.GONE);
                         progressBar.setVisibility(View.VISIBLE);
 
                     } else {
@@ -86,6 +88,10 @@ public class LoginActivity extends AppCompatActivity {
 
                 if (task.isSuccessful()) {
                     abrirTelaPrincipal();
+
+                    //Salvando as Preferencias do Usuário Logado
+                    Preferences preferences = new Preferences(LoginActivity.this);
+                    preferences.saveUserPreferences(usuario.getEmail(), usuario.getSenha());
 
                     Toast.makeText(LoginActivity.this, "Usuário Logado com Sucesso!", Toast.LENGTH_SHORT).show();
                 } else {

@@ -36,7 +36,8 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         GoogleMap.OnPolygonClickListener,
         GoogleMap.OnMyLocationButtonClickListener,
         GoogleMap.OnMyLocationClickListener,
-        ActivityCompat.OnRequestPermissionsResultCallback  {
+        ActivityCompat.OnRequestPermissionsResultCallback {
+
     private static final int COLOR_BLACK_ARGB = 0xff000000;
     private static final int COLOR_WHITE_ARGB = 0xffffffff;
     private static final int COLOR_GREEN_ARGB = 0xff388E3C;
@@ -71,9 +72,8 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     }
 
 
-
     // * Manipulates the map once available.
-   //  * This callback is triggered when the map is ready to be used.
+    //  * This callback is triggered when the map is ready to be used.
     // * This is where we can add markers or lines, add listeners or move the camera. In this case,
     // * we just add a marker near Sydney, Australia.
     // * If Google Play services is not installed on the device, the user will be prompted to install
@@ -84,8 +84,8 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     //* É aqui que podemos adicionar marcadores ou linhas, adicionar ouvintes ou mover a câmera. Nesse caso,
     // * nós apenas adicionamos um marcador perto de Sydney, Austrália.
     // * Se o Google Play Services não estiver instalado no dispositivo, o usuário será solicitado a instalar
-   // * dentro do SupportMapFragment. Este método só será acionado quando o usuário tiver
-  //* Instalei o Google Play Services e retornei ao aplicativo.
+    // * dentro do SupportMapFragment. Este método só será acionado quando o usuário tiver
+    //* Instalei o Google Play Services e retornei ao aplicativo.
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
@@ -103,20 +103,20 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             @Override
             public void onMapClick(LatLng point) {
 
-                 // Criando MarkerOptions
+                // Criando MarkerOptions
                 // Creating MarkerOptions
                 MarkerOptions options = new MarkerOptions();
 
-                 // Definir a posição do marcador
+                // Definir a posição do marcador
                 // Setting the position of the marker
                 options.position(point);
 
-                 // Obtém LatLng do ponto tocado
+                // Obtém LatLng do ponto tocado
                 //Get LatLng from touched point
                 double touchLat = point.latitude;
                 double touchLong = point.longitude;
 
-                 // aqui está o GeoCoding reverso que ajuda na obtenção do endereço do latlng
+                // aqui está o GeoCoding reverso que ajuda na obtenção do endereço do latlng
                 //here is reverse GeoCoding which helps in getting address from latlng
 
                 try {
@@ -134,7 +134,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                                     + ", " + addresses.get(0).getCountryName();
                             Toast.makeText(getApplicationContext(), "Address:- " + address, Toast.LENGTH_LONG).show();
                         }
-                         // desenha o marcador no local atualmente tocado
+                        // desenha o marcador no local atualmente tocado
                         // draws the marker at the currently touched location
                         mMap.addMarker(new MarkerOptions().position(point).title(address));
 
@@ -148,6 +148,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             }
         });
     }
+
     @Override
     public void onPolygonClick(Polygon polygon) {
 
@@ -157,7 +158,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     public void onPolylineClick(Polyline polyline) {
 
         // Virar do curso sólido para o padrão de traçado pontilhado.
-       // Flip from solid stroke to dotted stroke pattern.
+        // Flip from solid stroke to dotted stroke pattern.
         if ((polyline.getPattern() == null) || (!polyline.getPattern().contains(DOT))) {
             polyline.setPattern(PATTERN_POLYLINE_DOTTED);
         } else {
@@ -170,7 +171,6 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 Toast.LENGTH_SHORT).show();
     }
 
-//
     /**
      * Ativa a camada Meu local se a permissão de localização precisa tiver sido concedida.
      * Enables the My Location layer if the fine location permission has been granted.
@@ -184,7 +184,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                     Manifest.permission.ACCESS_FINE_LOCATION, true);
         } else if (mMap != null) {
 
-             // O acesso ao local foi concedido ao aplicativo.
+            // O acesso ao local foi concedido ao aplicativo.
             // Access to the location has been granted to the app.
             mMap.setMyLocationEnabled(true);
         }
@@ -219,12 +219,12 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         if (Permission.isPermissionGranted(permissions, grantResults,
                 Manifest.permission.ACCESS_FINE_LOCATION)) {
 
-             // Ativar a minha camada de localização, se a permissão foi concedida.
+            // Ativar a minha camada de localização, se a permissão foi concedida.
             // Enable the my location layer if the permission has been granted.
             enableMyLocation();
         } else {
 
-             // Exibe a caixa de diálogo de erro de permissão ausente quando os fragmentos são retomados.
+            // Exibe a caixa de diálogo de erro de permissão ausente quando os fragmentos são retomados.
             // Display the missing permission error dialog when the fragments resume.
             mPermissionDenied = true;
         }
@@ -235,7 +235,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         super.onResumeFragments();
         if (mPermissionDenied) {
 
-             // Permissão não foi concedida, exibir diálogo de erro.
+            // Permissão não foi concedida, exibir diálogo de erro.
             // Permission was not granted, display error dialog.
             showMissingPermissionError();
             mPermissionDenied = false;
@@ -250,6 +250,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         Permission.PermissionDeniedDialog
                 .newInstance(true).show(getSupportFragmentManager(), "dialog");
     }
+
 }
 
 

@@ -14,8 +14,9 @@ import android.support.v7.app.AppCompatActivity;
  */
 
 public class Permission {
-    public static void requestPermission(AppCompatActivity activity, int requestId,
-                                         String permission, boolean finishActivity) {
+
+    public static void requestPermission(AppCompatActivity activity, int requestId, String permission, boolean finishActivity) {
+
         if (ActivityCompat.shouldShowRequestPermissionRationale(activity, permission)) {
             // Display a dialog with rationale.
             Permission.RationaleDialog.newInstance(requestId, finishActivity)
@@ -23,8 +24,8 @@ public class Permission {
         } else {
             // Location permission has not been granted yet, request it.
             ActivityCompat.requestPermissions(activity, new String[]{permission}, requestId);
-
         }
+
     }
 
     /**
@@ -33,13 +34,14 @@ public class Permission {
      *
      * @see android.support.v4.app.ActivityCompat.OnRequestPermissionsResultCallback
      */
-    public static boolean isPermissionGranted(String[] grantPermissions, int[] grantResults,
-                                              String permission) {
+    public static boolean isPermissionGranted(String[] grantPermissions, int[] grantResults, String permission) {
+
         for (int i = 0; i < grantPermissions.length; i++) {
             if (permission.equals(grantPermissions[i])) {
                 return grantResults[i] == PackageManager.PERMISSION_GRANTED;
             }
         }
+
         return false;
     }
 
@@ -68,7 +70,7 @@ public class Permission {
         @Override
         public Dialog onCreateDialog(Bundle savedInstanceState) {
             mFinishActivity = getArguments().getBoolean(ARGUMENT_FINISH_ACTIVITY);
-//R.string.location_permission_denied
+            //R.string.location_permission_denied
             return new AlertDialog.Builder(getActivity())
                     .setMessage("")
                     .setPositiveButton(android.R.string.ok, null)
@@ -161,6 +163,8 @@ public class Permission {
             }
         }
     }
+
+
 }
 
 
