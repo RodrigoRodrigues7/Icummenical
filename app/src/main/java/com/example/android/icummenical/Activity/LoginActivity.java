@@ -43,9 +43,9 @@ public class LoginActivity extends AppCompatActivity {
         progressBar.setVisibility(View.GONE);
 
         // Verificando se o usuário já está logado
-        if (verificarUsuarioLogado()) {
+       if (verificarUsuarioLogado()) {
 
-            Intent intent = new Intent(LoginActivity.this, TelaPrincipalActivity.class);
+           Intent intent = new Intent(LoginActivity.this, PrincipalActivity.class);
             startActivity(intent);
 
         } else {
@@ -98,7 +98,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void abrirTelaPrincipal() {
-        Intent intent = new Intent(LoginActivity.this, TelaPrincipalActivity.class);
+        Intent intent = new Intent(LoginActivity.this, PrincipalActivity.class);
         startActivity(intent);
         finish();
     }
