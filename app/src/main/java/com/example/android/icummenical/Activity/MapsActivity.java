@@ -242,10 +242,10 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         }
     }
 
-    /**
-     * Exibe uma caixa de diálogo com uma mensagem de erro explicando que a permissão de localização está ausente.
-     * Displays a dialog with error message explaining that the location permission is missing.
-     */
+
+    //Exibe uma caixa de diálogo com uma mensagem de erro explicando que a permissão de localização está ausente.
+    //Displays a dialog with error message explaining that the location permission is missing.
+
     private void showMissingPermissionError() {
         Permission.PermissionDeniedDialog
                 .newInstance(true).show(getSupportFragmentManager(), "dialog");
