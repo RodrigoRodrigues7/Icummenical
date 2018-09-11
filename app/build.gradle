@@ -1,4 +1,5 @@
 apply plugin: 'com.android.application'
+apply plugin: 'com.google.gms.google-services'
 
 android {
     compileSdkVersion 27
@@ -42,8 +43,13 @@ dependencies {
     //Implementando o Picasso
     implementation 'com.squareup.picasso:picasso:2.5.2'
 
+    //SDK do Facebook
+    implementation 'com.facebook.android:facebook-android-sdk:4.35.0'
+
     implementation 'com.android.support:design:27.1.1'
     implementation 'com.google.android.gms:play-services-maps:15.0.1'
+    implementation 'com.google.android.gms:play-services-auth:15.0.1'
+
     testImplementation 'junit:junit:4.12'
 
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
@@ -51,4 +57,3 @@ dependencies {
 
 }
 
-apply plugin: 'com.google.gms.google-services'

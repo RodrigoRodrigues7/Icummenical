@@ -10,5 +10,7 @@
     <string name="action_settings">Configurações</string>
     <string name="action_SignOut">Sair</string>
 
+    <string name="facebook_app_id">830603277276659</string>
+    <string name="fb_login_protocol_scheme">fb830603277276659</string>
 
 </resources>
