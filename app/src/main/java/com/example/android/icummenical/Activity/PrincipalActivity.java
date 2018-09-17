@@ -2,9 +2,6 @@ package com.example.android.icummenical.Activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -13,10 +10,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Toast;
 
 import com.example.android.icummenical.R;
 import com.google.firebase.auth.FirebaseAuth;
+
 
 public class PrincipalActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -40,6 +37,7 @@ public class PrincipalActivity extends AppCompatActivity implements NavigationVi
         navigationView.setNavigationItemSelectedListener(this);
 
         auth = FirebaseAuth.getInstance();
+
     }
 
     @Override
@@ -82,8 +80,9 @@ public class PrincipalActivity extends AppCompatActivity implements NavigationVi
         if (id == R.id.nav_loc) {
             Intent i = new Intent(PrincipalActivity.this, MapsActivity.class);
             startActivity(i);
-        } else if (id == R.id.nav_gallery) {
-
+        } else if (id == R.id.nav_evento) {
+            Intent i = new Intent(PrincipalActivity.this, EventoActivity.class);
+            startActivity(i);
         } else if (id == R.id.nav_slideshow) {
 
         } else if (id == R.id.nav_manage) {
