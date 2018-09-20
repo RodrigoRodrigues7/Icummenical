@@ -7,5 +7,8 @@
 
     <color name="azur">#F1F5F6</color>
     <color name="white">#ffffff</color>
+    <color name="editTextBG">#DADADA</color>
+    <color name="transparent">#00000000</color>
+    <color name="textColor">#6E6E6E</color>
 
 </resources>

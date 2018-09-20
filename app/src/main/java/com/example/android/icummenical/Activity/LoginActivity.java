@@ -2,7 +2,6 @@ package com.example.android.icummenical.Activity;
 
 import android.content.Intent;
 import android.support.annotation.NonNull;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -15,6 +14,7 @@ import android.widget.Toast;
 
 import com.example.android.icummenical.Classes.Usuario;
 import com.example.android.icummenical.DAO.ConfigFirebase;
+import com.example.android.icummenical.Helper.CommonActivity;
 import com.example.android.icummenical.Helper.Preferences;
 import com.example.android.icummenical.R;
 import com.facebook.AccessToken;
@@ -34,7 +34,7 @@ import com.google.firebase.auth.FirebaseUser;
 
 import java.util.Arrays;
 
-public class LoginActivity extends AppCompatActivity {
+public class LoginActivity extends CommonActivity {
 
     private EditText edtEmail;
     private EditText edtSenha;
@@ -77,7 +77,7 @@ public class LoginActivity extends AppCompatActivity {
 
                     @Override
                     public void onError(FacebookException exception) {
-                        showSnackbar(exception.getMessage());
+                        showSnackBar(exception.getMessage());
                     }
                 });
 
@@ -118,7 +118,6 @@ public class LoginActivity extends AppCompatActivity {
 
                     } else {
                         Toast.makeText(LoginActivity.this, "Por Favor, Preencha os Campos de E-mail e Senha!", Toast.LENGTH_SHORT).show();
-                        edtEmail.requestFocus();
                     }
 
                 }
@@ -148,7 +147,7 @@ public class LoginActivity extends AppCompatActivity {
 //------------------------------------------------------------------------------------------------------------
 
     public void updateUI() {
-        showSnackbar("Você Entrou no Icummenical");
+        showToast("Você Entrou no Icummenical");
         abrirTelaPrincipal();
     }
 
@@ -225,13 +224,6 @@ public class LoginActivity extends AppCompatActivity {
             return false;
         }
 
-    }
-
-    public void showSnackbar(String message) {
-        Snackbar.make(progressBar,
-                message,
-                Snackbar.LENGTH_LONG)
-                .setAction("Action", null).show();
     }
 
 }

@@ -56,7 +56,8 @@
             android:name=".Activity.PrincipalActivity"
             android:label="@string/title_activity_principal"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".Activity.EventoActivity"></activity>
+        <activity android:name=".Activity.EventoActivity" />
+        <activity android:name=".Activity.CadastrarEventoActivity"></activity>
     </application>
 
 </manifest>

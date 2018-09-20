@@ -81,7 +81,7 @@ public class PrincipalActivity extends AppCompatActivity implements NavigationVi
             Intent i = new Intent(PrincipalActivity.this, MapsActivity.class);
             startActivity(i);
         } else if (id == R.id.nav_evento) {
-            Intent i = new Intent(PrincipalActivity.this, EventoActivity.class);
+            Intent i = new Intent(PrincipalActivity.this, CadastrarEventoActivity.class);
             startActivity(i);
         } else if (id == R.id.nav_slideshow) {
 

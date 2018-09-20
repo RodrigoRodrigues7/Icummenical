@@ -1,0 +1,279 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp"
+    tools:context=".Activity.CadastrarEventoActivity">
+
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_centerInParent="true"
+        app:cardCornerRadius="10dp"
+        app:cardElevation="5dp"
+        app:cardPreventCornerOverlap="true"
+        app:cardUseCompatPadding="true">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+
+                <LinearLayout
+                    android:id="@+id/linearLayout1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/colorPrimary"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:layout_width="70dp"
+                        android:layout_height="70dp"
+                        android:layout_marginTop="16dp"
+                        android:background="@drawable/circulo"
+                        android:padding="8dp"
+                        android:src="@drawable/ic_assignment"
+                        android:tint="@color/white" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginVertical="10dp"
+                        android:fontFamily="sans-serif-smallcaps"
+                        android:text="Registrar Novo Evento"
+                        android:textColor="@color/white"
+                        android:textSize="20sp" />
+
+                </LinearLayout>
+
+                <ImageView
+                    android:id="@+id/imageView1"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_below="@+id/linearLayout1"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="-10dp"
+                    android:rotation="45"
+                    android:src="@drawable/square" />
+
+                <!-- Titulo do Evento -->
+                <RelativeLayout
+                    android:id="@+id/relativeLayout1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/imageView1"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginTop="20dp">
+
+                    <ImageView
+                        android:id="@+id/imgView_userIcon"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:background="@drawable/edt_round"
+                        android:padding="2dp"
+                        android:src="@drawable/ic_assignment" />
+
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_alignBottom="@+id/imgView_userIcon"
+                        android:layout_alignParentTop="true"
+                        android:layout_toRightOf="@+id/imgView_userIcon"
+                        android:background="@color/azur"
+                        android:fontFamily="sans-serif-smallcaps"
+                        android:hint="Titulo do Evento"
+                        android:paddingLeft="10dp"
+                        android:textColor="@color/textColor"
+                        android:textSize="17sp" />
+
+                </RelativeLayout>
+
+                <!-- Datas do Evento -->
+                <RelativeLayout
+                    android:id="@+id/relativeLayout2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/relativeLayout1"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginTop="20dp">
+
+                    <ImageView
+                        android:id="@+id/imgView_datePicker"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:background="@drawable/edt_round"
+                        android:padding="4dp"
+                        android:src="@drawable/ic_date_range_white" />
+
+                    <EditText
+                        android:id="@+id/edtData"
+                        android:layout_width="120dp"
+                        android:layout_height="wrap_content"
+                        android:layout_alignBottom="@+id/imgView_datePicker"
+                        android:layout_alignParentTop="true"
+                        android:layout_toRightOf="@+id/imgView_datePicker"
+                        android:fontFamily="sans-serif-smallcaps"
+                        android:hint="DD/MM/AAAA"
+                        android:inputType="text"
+                        android:textAlignment="center"
+                        android:textSize="15sp" />
+
+                    <ImageView
+                        android:id="@+id/imgView_timePicker"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:layout_toRightOf="@+id/edtData"
+                        android:background="@drawable/edt_round"
+                        android:padding="4dp"
+                        android:src="@drawable/ic_access_time" />
+
+                    <EditText
+                        android:id="@+id/edtHorario"
+                        android:layout_width="80dp"
+                        android:layout_height="wrap_content"
+                        android:layout_alignBottom="@+id/imgView_timePicker"
+                        android:layout_alignParentTop="true"
+                        android:layout_toRightOf="@+id/imgView_timePicker"
+                        android:fontFamily="sans-serif-smallcaps"
+                        android:hint="00:00"
+                        android:inputType="time"
+                        android:textAlignment="center"
+                        android:textSize="15sp" />
+
+
+                </RelativeLayout>
+
+                <!-- Local do Evento -->
+                <RelativeLayout
+                    android:id="@+id/relativeLayout3"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/relativeLayout2"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginTop="20dp">
+
+                    <ImageView
+                        android:id="@+id/imgView_local"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:background="@drawable/edt_round"
+                        android:padding="2dp"
+                        android:src="@drawable/ic_place"
+                        android:tint="@color/white" />
+
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_alignBottom="@+id/imgView_local"
+                        android:layout_alignParentTop="true"
+                        android:layout_toRightOf="@+id/imgView_local"
+                        android:background="@color/azur"
+                        android:fontFamily="sans-serif-smallcaps"
+                        android:hint="Local do Evento"
+                        android:paddingLeft="10dp"
+                        android:textColor="@color/textColor"
+                        android:textSize="17sp" />
+
+                </RelativeLayout>
+
+                <!-- Descrição do Evento -->
+                <RelativeLayout
+                    android:id="@+id/relativeLayout4"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/relativeLayout3"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginTop="20dp">
+
+                    <ImageView
+                        android:id="@+id/imgView_descricao"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:background="@drawable/edt_round"
+                        android:padding="2dp"
+                        android:src="@drawable/ic_assignment" />
+
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_alignBottom="@+id/imgView_descricao"
+                        android:layout_alignParentTop="true"
+                        android:layout_toRightOf="@+id/imgView_descricao"
+                        android:background="@color/azur"
+                        android:fontFamily="sans-serif-smallcaps"
+                        android:hint="Descrição do Evento"
+                        android:inputType="textMultiLine"
+                        android:paddingLeft="10dp"
+                        android:textColor="@color/textColor"
+                        android:textSize="17sp" />
+
+                </RelativeLayout>
+
+                <!-- Atividades do Evento -->
+                <RelativeLayout
+                    android:id="@+id/relativeLayout5"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/relativeLayout4"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginTop="20dp">
+
+                    <EditText
+                        android:id="@+id/edt_sample1"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" />
+
+                    <EditText
+                        android:id="@+id/edt_sample2"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_below="@id/edt_sample1" />
+
+                    <EditText
+                        android:id="@+id/edt_sample3"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_below="@id/edt_sample2" />
+
+                    <EditText
+                        android:id="@+id/edt_sample4"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_below="@id/edt_sample3" />
+
+                </RelativeLayout>
+
+                <Button
+                    android:id="@+id/btn_registrarEvento"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/relativeLayout5"
+                    android:layout_marginBottom="16dp"
+                    android:layout_marginHorizontal="30dp"
+                    android:layout_marginTop="16dp"
+                    android:background="@drawable/btn_style"
+                    android:drawableRight="@drawable/ic_arrow_forward_white_24dp"
+                    android:fontFamily="sans-serif-smallcaps"
+                    android:text="Registrar Evento"
+                    android:textColor="@color/white" />
+
+            </RelativeLayout>
+
+        </ScrollView>
+
+    </android.support.v7.widget.CardView>
+
+</RelativeLayout>

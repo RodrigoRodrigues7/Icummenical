@@ -3,11 +3,11 @@ package com.example.android.icummenical.Classes;
 public class Evento {
 
     private int id;
-    private String nome;
-    private String horarioInicio;
-    private String horarioFim;
-    private String descricao;
+    private String titulo;
+    private String data;
     private String local;
+    private String descricao;
+    private String atividades;
 
     public int getId() {
         return id;
@@ -17,28 +17,28 @@ public class Evento {
         this.id = id;
     }
 
-    public String getNome() {
-        return nome;
+    public String getTitulo() {
+        return titulo;
     }
 
-    public void setNome(String nome) {
-        this.nome = nome;
+    public void setTitulo(String titulo) {
+        this.titulo = titulo;
     }
 
-    public String getHorarioInicio() {
-        return horarioInicio;
+    public String getData() {
+        return data;
     }
 
-    public void setHorarioInicio(String horarioInicio) {
-        this.horarioInicio = horarioInicio;
+    public void setData(String data) {
+        this.data = data;
     }
 
-    public String getHorarioFim() {
-        return horarioFim;
+    public String getLocal() {
+        return local;
     }
 
-    public void setHorarioFim(String horarioFim) {
-        this.horarioFim = horarioFim;
+    public void setLocal(String local) {
+        this.local = local;
     }
 
     public String getDescricao() {
@@ -49,12 +49,12 @@ public class Evento {
         this.descricao = descricao;
     }
 
-    public String getLocal() {
-        return local;
+    public String getAtividades() {
+        return atividades;
     }
 
-    public void setLocal(String local) {
-        this.local = local;
+    public void setAtividades(String atividades) {
+        this.atividades = atividades;
     }
 
 }

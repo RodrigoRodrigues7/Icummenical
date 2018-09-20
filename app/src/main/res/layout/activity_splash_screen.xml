@@ -7,11 +7,10 @@
     android:orientation="vertical"
     tools:context=".Activity.SplashScreenActivity">
 
-    <TextView
+    <ImageView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="SplashScreen is Running"
-        android:textAlignment="center"
-        android:textSize="30dp" />
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop"
+        android:src="@drawable/splash_screen_wallpaper" />
 
 </LinearLayout>
