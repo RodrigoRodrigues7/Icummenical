@@ -1,4 +1,4 @@
-package com.example.android.icummenical.Activity;
+package com.example.android.icummenical.Classes;
 
 import android.app.DatePickerDialog;
 import android.app.Dialog;

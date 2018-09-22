@@ -29,11 +29,12 @@ public class EventoActivity extends AppCompatActivity {
         RecyclerView recyclerView = findViewById(R.id.recyclerViewList);
 
         List<cardItem> mCardList = new ArrayList<>();
-        mCardList.add(new cardItem(R.drawable.img_background1, "Forests", R.drawable.profile_pic2));
+        mCardList.add(new cardItem(R.drawable.img_background1, "Forests", R.drawable.profile_pic1));
         mCardList.add(new cardItem(R.drawable.img_background2, "Lighting's", R.drawable.profile_pic3));
         mCardList.add(new cardItem(R.drawable.img_background3, "Lighting's and Cities", R.drawable.profile_pic4));
-        mCardList.add(new cardItem(R.drawable.img_background4, "Cities", R.drawable.profile_pic5));
-        mCardList.add(new cardItem(R.drawable.img_background5, "Mountains", R.drawable.profile_pic2));
+        mCardList.add(new cardItem(R.drawable.img_background1, "Forests", R.drawable.profile_pic1));
+        mCardList.add(new cardItem(R.drawable.img_background2, "Lighting's", R.drawable.profile_pic3));
+        mCardList.add(new cardItem(R.drawable.img_background3, "Lighting's and Cities", R.drawable.profile_pic4));
 
         Adapter adapter = new Adapter(this, mCardList);
         recyclerView.setAdapter(adapter);

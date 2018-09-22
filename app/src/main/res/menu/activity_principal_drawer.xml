@@ -5,17 +5,17 @@
 
     <group android:checkableBehavior="single">
         <item
-            android:id="@+id/nav_loc"
+            android:id="@+id/nav_mapa"
             android:icon="@android:drawable/ic_dialog_map"
             android:title="Localização" />
         <item
-            android:id="@+id/nav_evento"
+            android:id="@+id/nav_listarEventos"
             android:icon="@drawable/ic_dashboard"
-            android:title="Eventos" />
+            android:title="Listar Eventos" />
         <item
-            android:id="@+id/nav_slideshow"
-            android:icon="@drawable/ic_menu_slideshow"
-            android:title="Slideshow" />
+            android:id="@+id/nav_cadastrarEvento"
+            android:icon="@drawable/ic_assignment"
+            android:title="Cadastrar Evento" />
         <item
             android:id="@+id/nav_manage"
             android:icon="@drawable/ic_menu_manage"

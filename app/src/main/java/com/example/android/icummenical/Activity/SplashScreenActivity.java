@@ -24,7 +24,7 @@ public class SplashScreenActivity extends AppCompatActivity {
             @Override
             public void run() {
                 try {
-                    sleep(3000); // Colocando a thread pra dormir
+                    sleep(3700); // Colocando a thread pra dormir
                 } catch (InterruptedException ex) {
                     ex.printStackTrace();
                 } finally {

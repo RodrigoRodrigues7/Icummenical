@@ -71,20 +71,22 @@ public class PrincipalActivity extends AppCompatActivity implements NavigationVi
         return super.onOptionsItemSelected(item);
     }
 
+    // Método que controla os clicks no 'Navigation Drawer'
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
-        // Handle navigation view item clicks here.
+
         int id = item.getItemId();
 
-        if (id == R.id.nav_loc) {
+        if (id == R.id.nav_mapa) {
             Intent i = new Intent(PrincipalActivity.this, MapsActivity.class);
             startActivity(i);
-        } else if (id == R.id.nav_evento) {
+        } else if (id == R.id.nav_listarEventos) {
+            Intent i = new Intent(PrincipalActivity.this, EventoActivity.class);
+            startActivity(i);
+        } else if (id == R.id.nav_cadastrarEvento) {
             Intent i = new Intent(PrincipalActivity.this, CadastrarEventoActivity.class);
             startActivity(i);
-        } else if (id == R.id.nav_slideshow) {
-
         } else if (id == R.id.nav_manage) {
 
         } else if (id == R.id.nav_share) {
