@@ -29,6 +29,8 @@ dependencies {
     implementation 'com.android.support:design:27.1.1'
     implementation 'com.android.support:design:27.1.0'
 
+    implementation 'de.hdodenhof:circleimageview:2.2.0'
+
 //----------------------- REFERENTE AO FIREBASE -----------------------
 
     //Implementando o Firebase
@@ -37,6 +39,8 @@ dependencies {
     implementation 'com.google.firebase:firebase-auth:16.0.3'
     //Implementando o Realtime Database
     implementation 'com.google.firebase:firebase-database:16.0.1'
+    //Implamentando o Firestore
+    implementation 'com.google.firebase:firebase-firestore:17.1.0'
     //Implementando o Storage
     implementation 'com.google.firebase:firebase-storage:16.0.1'
     //Implementando o Picasso

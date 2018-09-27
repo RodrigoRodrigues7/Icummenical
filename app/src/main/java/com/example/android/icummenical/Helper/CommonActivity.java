@@ -1,7 +1,11 @@
 package com.example.android.icummenical.Helper;
 
+import android.content.Context;
+import android.hardware.input.InputManager;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
@@ -10,18 +14,21 @@ abstract public class CommonActivity extends AppCompatActivity {
 
     protected ProgressBar progressBar;
 
-    protected void showSnackBar(String message) {
-        Snackbar.make(progressBar,
-                message,
-                Snackbar.LENGTH_LONG)
-                .setAction("Action", null).show();
-    }
-
     protected void showToast(String message) {
         Toast.makeText(this,
                 message,
                 Toast.LENGTH_SHORT)
                 .show();
+    }
+
+    protected void closeKeyboard(){
+
+        View view = this.getCurrentFocus();
+        if (view != null){
+            InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+        }
+
     }
 
 }

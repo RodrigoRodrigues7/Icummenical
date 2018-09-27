@@ -2,7 +2,6 @@ package com.example.android.icummenical.Activity;
 
 import android.content.Intent;
 import android.support.annotation.NonNull;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -38,7 +37,7 @@ public class LoginActivity extends CommonActivity {
 
     private EditText edtEmail;
     private EditText edtSenha;
-    private Button btnLogin;
+    private Button btnLogin, btnCriarNovaConta;
     private ProgressBar progressBar;
     private ImageView login_Facebook;
 
@@ -77,7 +76,7 @@ public class LoginActivity extends CommonActivity {
 
                     @Override
                     public void onError(FacebookException exception) {
-                        showSnackBar(exception.getMessage());
+                        showToast(exception.getMessage());
                     }
                 });
 
@@ -89,6 +88,7 @@ public class LoginActivity extends CommonActivity {
         edtEmail = findViewById(R.id.edt_emailLogin);
         edtSenha = findViewById(R.id.edt_senhaLogin);
         btnLogin = findViewById(R.id.btn_loginUsuario);
+        btnCriarNovaConta = findViewById(R.id.btn_criarNovaConta);
 
         progressBar = findViewById(R.id.progressBarID);
         progressBar.setVisibility(View.GONE);
@@ -113,6 +113,7 @@ public class LoginActivity extends CommonActivity {
                         usuario.setSenha(edtSenha.getText().toString());
 
                         validarLogin();
+                        closeKeyboard();
                         btnLogin.setVisibility(View.GONE);
                         progressBar.setVisibility(View.VISIBLE);
 
@@ -123,8 +124,17 @@ public class LoginActivity extends CommonActivity {
                 }
             });
 
-
         }
+
+        btnCriarNovaConta.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent intent = new Intent(LoginActivity.this, CriarContaUsuarioActivity.class);
+                startActivity(intent);
+
+            }
+        });
 
     }
 
