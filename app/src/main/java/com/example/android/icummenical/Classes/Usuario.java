@@ -6,17 +6,16 @@ public class Usuario {
 
     private String nome;
     private String email;
-    private int fotoPerfil;
     private String senha;
     private String tipoUsuario;
+    private String keyUsuario;
 
     public Usuario() {
     }
 
-    public Usuario(String nome, String email, int fotoPerfil, String senha) {
+    public Usuario(String nome, String email, String senha) {
         this.nome = nome;
         this.email = email;
-        this.fotoPerfil = fotoPerfil;
         this.senha = senha;
     }
 
@@ -36,14 +35,6 @@ public class Usuario {
         this.email = email;
     }
 
-    public int getFotoPerfil() {
-        return fotoPerfil;
-    }
-
-    public void setFotoPerfil(int fotoPerfil) {
-        this.fotoPerfil = fotoPerfil;
-    }
-
     @Exclude
     public String getSenha() {
         return senha;
@@ -60,6 +51,14 @@ public class Usuario {
 
     public void setTipoUsuario(String tipoUsuario) {
         this.tipoUsuario = tipoUsuario;
+    }
+
+    public String getKeyUsuario() {
+        return keyUsuario;
+    }
+
+    public void setKeyUsuario(String keyUsuario) {
+        this.keyUsuario = keyUsuario;
     }
 
 }

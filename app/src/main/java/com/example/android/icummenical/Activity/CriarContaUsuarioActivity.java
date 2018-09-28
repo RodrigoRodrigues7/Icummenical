@@ -1,16 +1,10 @@
 package com.example.android.icummenical.Activity;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
-import android.content.IntentSender;
-import android.graphics.Bitmap;
-import android.net.Uri;
 import android.os.Bundle;
-import android.provider.ContactsContract;
-import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
-import android.util.Log;
-import android.view.TextureView;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -21,79 +15,67 @@ import com.example.android.icummenical.Helper.CommonActivity;
 import com.example.android.icummenical.Helper.Preferences;
 import com.example.android.icummenical.R;
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.FirebaseAuthUserCollisionException;
 import com.google.firebase.auth.FirebaseAuthWeakPasswordException;
+
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
-import com.google.firebase.storage.UploadTask;
-import com.squareup.picasso.Picasso;
-
-import java.io.ByteArrayOutputStream;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
-
-import de.hdodenhof.circleimageview.CircleImageView;
 
 public class CriarContaUsuarioActivity extends CommonActivity {
 
-    private static final int PICK_IMAGE = 2223;
-    private Button btnCriarConta, btnRetornarLogin;
+    private Button btnCriarNovaConta, btnRetornarLogin;
     private EditText edtNomeUsuario, edtEmail, edtSenha, edtSenhaConfirm;
-
-    private CircleImageView imgFotoPerfil;
-    private Uri imgUri;
+    private ProgressDialog mProgress;
 
     private Usuario usuario;
     private FirebaseAuth mAuth;
-    private StorageReference mStorageRef;
-    private FirebaseFirestore mFirestore;
 
+    private StorageReference mStorageRef;
     private DatabaseReference mReference;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_criar_conta_usuario);
 
-        mStorageRef = FirebaseStorage.getInstance().getReference().child("images");
         mAuth = FirebaseAuth.getInstance();
-        mFirestore = FirebaseFirestore.getInstance();
+        mReference = FirebaseDatabase.getInstance().getReference();
+        mStorageRef = FirebaseStorage.getInstance().getReference();
 
         edtNomeUsuario = findViewById(R.id.edt_usernameCadastro);
         edtEmail = findViewById(R.id.edt_emailCadastro);
         edtSenha = findViewById(R.id.edt_senhaCadastro);
         edtSenhaConfirm = findViewById(R.id.edt_senhaCadastroConfirmar);
 
-        imgFotoPerfil = findViewById(R.id.img_profilePicture);
-        imgUri = null;
+        mProgress = new ProgressDialog(this);
 
-        btnCriarConta = findViewById(R.id.btn_criarNovaConta);
+        btnCriarNovaConta = findViewById(R.id.btn_proximoPasso);
         btnRetornarLogin = findViewById(R.id.btn_retornarLogin);
 
-        btnCriarConta.setOnClickListener(new View.OnClickListener() {
+        // Botão para Criar Nova Conta
+        btnCriarNovaConta.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                if (verificarCampos() && edtSenha.getText().toString().equals(edtSenhaConfirm.getText().toString())) {
+                if (edtSenha.getText().toString().equals(edtSenhaConfirm.getText().toString())) {
+
+                    mProgress.setTitle("Criando Nova Conta");
+                    mProgress.setMessage("Estamos Registrando sua Conta, Aguarde um Momento ...");
+                    mProgress.show();
 
                     usuario = new Usuario();
-
                     usuario.setNome(edtNomeUsuario.getText().toString());
                     usuario.setEmail(edtEmail.getText().toString());
                     usuario.setSenha(edtSenha.getText().toString());
 
                     registrarNovaConta();
-                    showToast("Conta Criada com Sucesso!!!");
 
                 } else {
                     showToast("Por Favor, Verifique se a 'Senha' está Correta, e Escolha uma Imagem de Perfil.");
@@ -103,17 +85,7 @@ public class CriarContaUsuarioActivity extends CommonActivity {
             }
         });
 
-        imgFotoPerfil.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                Intent intent = new Intent();
-                intent.setType("image/*");
-                intent.setAction(Intent.ACTION_GET_CONTENT);
-                startActivityForResult(Intent.createChooser(intent, "Escolha uma Foto de Perfil"), PICK_IMAGE);
-            }
-        });
-
+        // Botão para Voltar a Tela de Login
         btnRetornarLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -128,18 +100,7 @@ public class CriarContaUsuarioActivity extends CommonActivity {
 
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        if (requestCode == PICK_IMAGE) {
-            imgUri = data.getData();
-            imgFotoPerfil.setImageURI(imgUri);
-        }
-
-    }
-
-    //--------------------------------------------------------------------------------------------------
+//--------------------------------------------------------------------------------------------------
 
     private void registrarNovaConta() {
 
@@ -152,7 +113,6 @@ public class CriarContaUsuarioActivity extends CommonActivity {
 
                     inserirNovoUsuario();
                     mAuth.signOut();
-
                     abrirTelaPrincipal();
                     finish();
 
@@ -185,12 +145,17 @@ public class CriarContaUsuarioActivity extends CommonActivity {
         try {
 
             mReference = ConfigFirebase.getDatabaseReference().child("usuarios");
-            mReference.push().setValue(usuario);
+            String key = mReference.push().getKey();
+            usuario.setKeyUsuario(key);
+
+            mReference.child(key).setValue(usuario);
+            mProgress.dismiss();
+
             showToast("Conta Criada com Sucesso!");
             return true;
         } catch (Exception e) {
 
-            showToast("Erro ao Inserir Novo Usuário!");
+            showToast("Erro ao Criar Nova Conta!");
             e.printStackTrace();
             return false;
         }

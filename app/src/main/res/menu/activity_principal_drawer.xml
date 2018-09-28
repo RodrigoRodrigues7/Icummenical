@@ -17,9 +17,9 @@
             android:icon="@drawable/ic_assignment"
             android:title="Cadastrar Evento" />
         <item
-            android:id="@+id/nav_manage"
+            android:id="@+id/nav_abrirPerfilUsuario"
             android:icon="@drawable/ic_menu_manage"
-            android:title="Tools" />
+            android:title="Minha Conta" />
     </group>
 
     <item android:title="Communicate">
@@ -36,3 +36,4 @@
     </item>
 
 </menu>
+
