@@ -108,28 +108,30 @@ public class PrincipalActivity extends AppCompatActivity implements NavigationVi
 
         auth.signOut();
 
-       // Intent intent = new Intent(PrincipalActivity.this, LoginActivity.class);
-        //startActivity(intent);
-       // finish();
-        final AlertDialog.Builder builder = new AlertDialog.Builder(this,R.style.Theme_AppCompat_DayNight_Dialog_Alert);
-        builder.setTitle("iCummenical");
-        builder.setMessage("Deseja sair?");
+        Intent intent = new Intent(PrincipalActivity.this, LoginActivity.class);
+        startActivity(intent);
+        finish();
+      //  final AlertDialog.Builder builder = new AlertDialog.Builder(this,R.style.Theme_AppCompat_DayNight_Dialog_Alert);
+      //  builder.setTitle("iCummenical");
+      //  builder.setMessage("Deseja sair?");
 
-        builder.setPositiveButton("Sim", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int id) {
+        //builder.setPositiveButton("Sim", new DialogInterface.OnClickListener() {
+          //  public void onClick(DialogInterface dialog, int id) {
 
-                Intent intent = new Intent(PrincipalActivity.this, LoginActivity.class);
-                startActivity(intent);
-                finish();
-            }
-        });
+            //    Intent intent = new Intent(PrincipalActivity.this, LoginActivity.class);
+              //  startActivity(intent);
+               // finish();
+          //  }
+        //});
+//	builder.setNegativeButton("Não",new DialogInterface.OnClickListener() {
+  //          public void onClick(DialogInterface dialog,int id) {
+    //            dialog.cancel();
+      //      }
+        //});
 
-        builder.setNegativeButton("Não",null);
-        alerta = builder.create();
-        builder.show();
+        //alerta = builder.create();
+       // builder.show();
     }
-
-
 
 
 }
