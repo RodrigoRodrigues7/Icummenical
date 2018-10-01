@@ -20,7 +20,8 @@
             android:name="com.facebook.FacebookActivity"
             android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
             android:label="@string/app_name" />
-        <activity android:name=".Activity.SplashScreenActivity"
+        <activity
+            android:name=".Activity.SplashScreenActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -65,7 +66,7 @@
         <activity
             android:name=".Activity.CriarContaUsuarioActivity"
             android:windowSoftInputMode="stateHidden" />
-        <activity android:name=".Activity.PerfilUsuarioActivity"></activity>
+        <activity android:name=".Activity.PerfilUsuarioActivity" />
     </application>
 
 </manifest>
