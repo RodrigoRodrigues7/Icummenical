@@ -13,4 +13,6 @@
     <string name="facebook_app_id">830603277276659</string>
     <string name="fb_login_protocol_scheme">fb830603277276659</string>
 
+    <string name="alertDialog_Text">Ao Clicar em Confirmar você irá excluir todos os seus dados salvos no Icummenical, etc. Deseja REALMENTE Excluir sua conta ?</string>
+
 </resources>

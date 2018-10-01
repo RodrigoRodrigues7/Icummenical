@@ -33,7 +33,7 @@ public class PrincipalActivity extends CommonActivity implements NavigationView.
     private String emailUsuarioLogado;
 
     private FirebaseAuth mAuth;
-    private DatabaseReference mReference;
+    private DatabaseReference databaseReference;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,8 +42,6 @@ public class PrincipalActivity extends CommonActivity implements NavigationView.
         setContentView(R.layout.activity_principal);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-        carregarFotoPadrao();
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -55,7 +53,7 @@ public class PrincipalActivity extends CommonActivity implements NavigationView.
 
         mAuth = FirebaseAuth.getInstance();
         emailUsuarioLogado = mAuth.getCurrentUser().getEmail();
-        mReference = FirebaseDatabase.getInstance().getReference().child("usuarios");
+        databaseReference = FirebaseDatabase.getInstance().getReference().child("usuarios");
 
         nomeUsuario = findViewById(R.id.txt_nomeUsuarioHeader);
         emailUsuario = findViewById(R.id.txt_emailUsuarioHeader);
@@ -136,28 +134,28 @@ public class PrincipalActivity extends CommonActivity implements NavigationView.
     }
 
     //Método para Carregar Imagem do Usuário
-    private void carregarFotoPadrao() {
-
-        FirebaseStorage storage = FirebaseStorage.getInstance();
-        final StorageReference storageReference = storage.getReferenceFromUrl("gs://icummenical.appspot.com/fotoPerfilUsuario-" + emailUsuarioLogado + "/" + emailUsuarioLogado + ".jpg");
-
-        final int width = 300;
-        final int height = 300;
-
-        storageReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-            @Override
-            public void onSuccess(Uri uri) {
-                Picasso.with(PrincipalActivity.this).load(uri.toString()).resize(width, height).centerCrop().into(imgUsuario);
-
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                showToast("Imagem Não Encontrada");
-            }
-        });
-
-
-    }
+//    private void carregarFotoPadrao() {
+//
+//        FirebaseStorage storage = FirebaseStorage.getInstance();
+//        final StorageReference storageReference = storage.getReferenceFromUrl("gs://icummenical.appspot.com/fotoPerfilUsuario-" + emailUsuarioLogado + "/" + emailUsuarioLogado + ".jpg");
+//
+//        final int width = 300;
+//        final int height = 300;
+//
+//        storageReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+//            @Override
+//            public void onSuccess(Uri uri) {
+//                Picasso.with(PrincipalActivity.this).load(uri.toString()).resize(width, height).centerCrop().into(imgUsuario);
+//
+//            }
+//        }).addOnFailureListener(new OnFailureListener() {
+//            @Override
+//            public void onFailure(@NonNull Exception e) {
+//                showToast("Imagem Não Encontrada");
+//            }
+//        });
+//
+//
+//    }
 
 }

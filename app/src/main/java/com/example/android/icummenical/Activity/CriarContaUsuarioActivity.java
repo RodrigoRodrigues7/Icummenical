@@ -64,6 +64,7 @@ public class CriarContaUsuarioActivity extends CommonActivity {
             @Override
             public void onClick(View v) {
 
+                closeKeyboard();
                 if (edtSenha.getText().toString().equals(edtSenhaConfirm.getText().toString())) {
 
                     mProgress.setTitle("Criando Nova Conta");

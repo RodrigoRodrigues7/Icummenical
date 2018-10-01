@@ -12,8 +12,6 @@ import android.widget.Toast;
 //Para Fazer uso dos métodos dessa classe, as outras classes tem que extender de 'CommonActivity'
 abstract public class CommonActivity extends AppCompatActivity {
 
-    protected ProgressBar progressBar;
-
     protected void showToast(String message) {
         Toast.makeText(this,
                 message,

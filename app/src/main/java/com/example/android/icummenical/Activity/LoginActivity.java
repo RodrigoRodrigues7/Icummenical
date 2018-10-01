@@ -129,10 +129,8 @@ public class LoginActivity extends CommonActivity {
         btnCriarNovaConta.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 Intent intent = new Intent(LoginActivity.this, CriarContaUsuarioActivity.class);
                 startActivity(intent);
-
             }
         });
 
@@ -212,6 +210,8 @@ public class LoginActivity extends CommonActivity {
                     Toast.makeText(LoginActivity.this, "Usuário Logado com Sucesso!", Toast.LENGTH_SHORT).show();
                 } else {
                     Toast.makeText(LoginActivity.this, "Senha ou E-mail Inválido, tente Novamente!", Toast.LENGTH_SHORT).show();
+                    progressBar.setVisibility(View.GONE);
+                    btnLogin.setVisibility(View.VISIBLE);
                 }
 
             }
