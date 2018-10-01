@@ -1,5 +1,6 @@
 package com.example.android.icummenical.Activity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -8,6 +9,7 @@ import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -128,10 +130,33 @@ public class PrincipalActivity extends CommonActivity implements NavigationView.
 
         mAuth.signOut();
 
-        Intent intent = new Intent(PrincipalActivity.this, LoginActivity.class);
-        startActivity(intent);
-        finish();
-    }
+       // Intent intent = new Intent(PrincipalActivity.this, LoginActivity.class);
+        //startActivity(intent);
+       // finish();
+
+        final AlertDialog.Builder builder = new AlertDialog.Builder(this,R.style.Theme_AppCompat_DayNight_Dialog_Alert);
+        builder.setTitle("iCummenical");
+        builder.setMessage("Deseja sair?");
+
+        builder.setPositiveButton("Sim", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+
+                Intent intent = new Intent(PrincipalActivity.this, LoginActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        });
+        builder.setNegativeButton("Não",new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog,int id) {
+                dialog.cancel();
+            }
+        });
+
+        AlertDialog alerta = builder.create();
+        builder.show();
+
+
+}
 
     //Método para Carregar Imagem do Usuário
 //    private void carregarFotoPadrao() {
