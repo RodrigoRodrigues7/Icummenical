@@ -105,6 +105,7 @@ public class EditarPerfilActivity extends CommonActivity {
 
         } else {
             showToast("Por Favor, Verifique se a 'Senha' está Correta, e Escolha uma Imagem de Perfil.");
+            senhaUsuario.requestFocus();
             senhaUsuario.setText("");
             confirmarSenhaUsuario.setText("");
         }
@@ -208,7 +209,6 @@ public class EditarPerfilActivity extends CommonActivity {
 
             nomeUsuario.setText(txtNome);
         }
-
     }
 
     private void abrirTelaPrincipal() {
