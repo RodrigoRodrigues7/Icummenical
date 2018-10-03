@@ -40,8 +40,9 @@ public class PerfilUsuarioActivity extends CommonActivity {
     private static final int GALLERY_CODE = 2333;
     private String emailUsuarioLogado;
 
+
     private ImageView imgFotoUsuario;
-    private Button btnSalvarFoto, btnExcluirConta, btnVoltarMenu;
+    private Button btnEditarPerfil, btnExcluirConta, btnVoltarMenu;
     private TextView txtNomeUsuario, txtEmailUsuario;
 
     private StorageReference storageReference;
@@ -83,7 +84,7 @@ public class PerfilUsuarioActivity extends CommonActivity {
         txtNomeUsuario = findViewById(R.id.txt_perfilNomeUsuario);
         txtEmailUsuario = findViewById(R.id.txt_perfilEmailUsuario);
 
-        btnSalvarFoto = findViewById(R.id.btn_salvarFotoPerfil);
+        btnEditarPerfil = findViewById(R.id.btn_editarPerfilusuario);
         btnExcluirConta = findViewById(R.id.btn_excluirConta);
         btnVoltarMenu = findViewById(R.id.btn_voltarMenuPrincipal);
 
@@ -95,11 +96,10 @@ public class PerfilUsuarioActivity extends CommonActivity {
             }
         });
 
-        btnSalvarFoto.setOnClickListener(new View.OnClickListener() {
+        btnEditarPerfil.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showToast("Foto de Perfil Salva");
-                atualizarPerfil();
+                abrirTelaEditarPerfil();
             }
         });
 
@@ -136,11 +136,6 @@ public class PerfilUsuarioActivity extends CommonActivity {
 
 //--------------------------------------------------------------------------------------------------
 
-    private void atualizarPerfil() {
-        Log.d("USUARIO_ATUALIZADO", "------------------> Usuario Atualizado <------------------");
-        salvarFoto();
-    }
-
     private void salvarFoto() {
 
         StorageReference imageReference = storageReference.child("fotoPerfilUsuario-" + emailUsuarioLogado + "/" + emailUsuarioLogado + ".jpg");
@@ -164,7 +159,28 @@ public class PerfilUsuarioActivity extends CommonActivity {
             }
         });
 
-        voltarMenuPrincipal();
+    }
+
+    private void carregarFotoPadrao() {
+
+        FirebaseStorage storage = FirebaseStorage.getInstance();
+        final StorageReference storageReference = storage.getReferenceFromUrl("gs://icummenical.appspot.com/fotoPerfilUsuario-" + emailUsuarioLogado + "/" + emailUsuarioLogado + ".jpg");
+
+        final int width = 300;
+        final int height = 300;
+
+        storageReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+            @Override
+            public void onSuccess(Uri uri) {
+                Picasso.with(PerfilUsuarioActivity.this).load(uri.toString()).resize(width, height).centerCrop().into(imgFotoUsuario);
+
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                showToast("Imagem Não Encontrada");
+            }
+        });
 
     }
 
@@ -210,30 +226,6 @@ public class PerfilUsuarioActivity extends CommonActivity {
 
 //--------------------------------------------------------------------------------------------------
 
-    private void carregarFotoPadrao() {
-
-        FirebaseStorage storage = FirebaseStorage.getInstance();
-        final StorageReference storageReference = storage.getReferenceFromUrl("gs://icummenical.appspot.com/fotoPerfilUsuario-" + emailUsuarioLogado + "/" + emailUsuarioLogado + ".jpg");
-
-        final int width = 300;
-        final int height = 300;
-
-        storageReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-            @Override
-            public void onSuccess(Uri uri) {
-                Picasso.with(PerfilUsuarioActivity.this).load(uri.toString()).resize(width, height).centerCrop().into(imgFotoUsuario);
-
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                showToast("Imagem Não Encontrada");
-            }
-        });
-
-
-    }
-
     private void voltarMenuPrincipal() {
         Intent voltarMenu = new Intent(PerfilUsuarioActivity.this, PrincipalActivity.class);
         startActivity(voltarMenu);
@@ -246,21 +238,52 @@ public class PerfilUsuarioActivity extends CommonActivity {
         finish();
     }
 
-    private void abrirAlertdialogConfirmarExclusao() {
+    private void abrirTelaEditarPerfil() {
 
+        String emailUsuarioLogado = mAuth.getCurrentUser().getEmail();
+
+        databaseReference = ConfigFirebase.getDatabaseReference();
+        databaseReference.child("usuarios").orderByChild("email").equalTo(emailUsuarioLogado).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+                    Usuario usuario = postSnapshot.getValue(Usuario.class);
+
+                    final Intent intent = new Intent(PerfilUsuarioActivity.this, EditarPerfilActivity.class);
+                    final Bundle bundle = new Bundle();
+
+                    bundle.putString("origem", "editarUsuario");
+                    bundle.putString("nome", usuario.getNome());
+                    bundle.putString("email", usuario.getEmail());
+                    bundle.putString("keyUsuario", usuario.getKeyUsuario());
+
+                    intent.putExtras(bundle);
+                    startActivity(intent);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+    }
+
+    private void abrirAlertdialogConfirmarExclusao() {
         final Dialog dialog = new Dialog(this);
 
         dialog.setContentView(R.layout.alert_excluir_personalizado);
 
         final Button btnConfirmar = dialog.findViewById(R.id.btn_confirmarExclusao);
         final Button btnCancelar = dialog.findViewById(R.id.btn_cancelarExclusao);
-        final ImageView imgClose = dialog.findViewById(R.id.btn_closeSuperior);
+        final ImageView imgClose = dialog.findViewById(R.id.img_closeAlertDialog);
 
         btnConfirmar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 excluirContaDeslogar();
-                dialog.dismiss();
+//                dialog.dismiss();
             }
         });
 

@@ -67,6 +67,7 @@
             android:name=".Activity.CriarContaUsuarioActivity"
             android:windowSoftInputMode="stateHidden" />
         <activity android:name=".Activity.PerfilUsuarioActivity" />
+        <activity android:name=".Activity.EditarPerfilActivity"></activity>
     </application>
 
 </manifest>

@@ -81,6 +81,8 @@ public class CriarContaUsuarioActivity extends CommonActivity {
                 } else {
                     showToast("Por Favor, Verifique se a 'Senha' está Correta, e Escolha uma Imagem de Perfil.");
                     edtSenha.requestFocus();
+                    edtSenha.setText("");
+                    edtSenhaConfirm.setText("");
                 }
 
             }

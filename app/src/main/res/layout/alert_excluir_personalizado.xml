@@ -1,14 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:layout_marginHorizontal="5dp"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
     android:background="@color/transparent"
     android:orientation="vertical">
 
     <ImageView
-        android:id="@+id/btn_closeSuperior"
+        android:id="@+id/img_closeAlertDialog"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
@@ -20,14 +19,8 @@
     <android.support.v7.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:elevation="5dp"
         app:cardBackgroundColor="@color/alertDialog_Red"
-        app:cardCornerRadius="10dp"
-        app:cardPreventCornerOverlap="true"
-        app:cardUseCompatPadding="true">
+        app:cardCornerRadius="10dp">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -44,7 +37,7 @@
                 android:text="Deseja Excluir sua Conta"
                 android:textAlignment="center"
                 android:textColor="@color/white"
-                android:textSize="23sp"
+                android:textSize="20sp"
                 android:textStyle="bold" />
 
             <ImageView
@@ -62,24 +55,28 @@
                 android:text="@string/alertDialog_Text"
                 android:textAlignment="center"
                 android:textColor="@color/white"
-                android:textSize="18sp" />
+                android:textSize="17sp" />
 
             <Button
                 android:id="@+id/btn_confirmarExclusao"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="100dp"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="10dp"
                 android:background="@drawable/btn_style_alertdialog"
                 android:text="Confirmar"
                 android:textColor="@color/white" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginHorizontal="30dp"
+                android:layout_marginVertical="10dp"
+                android:background="@color/lightGrey" />
 
             <Button
                 android:id="@+id/btn_cancelarExclusao"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="100dp"
-                android:layout_marginTop="20dp"
                 android:background="@drawable/btn_style_alertdialog"
                 android:text="Cancelar"
                 android:textColor="@color/white" />

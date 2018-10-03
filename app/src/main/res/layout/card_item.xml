@@ -44,16 +44,16 @@
 
             <Button
                 android:id="@+id/btn_detalhes"
-                android:layout_width="140dp"
-                android:layout_height="45dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_marginLeft="240dp"
                 android:layout_marginTop="175dp"
                 android:background="@drawable/btn_style"
-                android:drawableRight="@drawable/ic_arrow_forward_white_24dp"
                 android:fontFamily="sans-serif"
+                android:paddingHorizontal="15dp"
                 android:text="Detalhes"
                 android:textColor="@color/white"
-                android:textSize="16sp" />
+                android:textSize="13sp" />
 
         </RelativeLayout>
 
