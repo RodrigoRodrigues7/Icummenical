@@ -1,162 +1,237 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/azur"
-    android:gravity="center"
+    android:gravity="center_horizontal"
     android:orientation="vertical"
     tools:context=".Activity.LoginActivity">
 
     <android.support.v7.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:layout_margin="10dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
         app:cardCornerRadius="10dp"
         app:cardElevation="5dp"
         app:cardPreventCornerOverlap="true"
-        app:cardUseCompatPadding="true">
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <LinearLayout
+            <android.support.constraint.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center"
+                android:layout_height="500dp"
+                android:gravity="center_horizontal"
                 android:orientation="vertical">
 
                 <TextView
+                    android:id="@+id/textView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_marginTop="15dp"
-                    android:fontFamily="sans-serif-smallcaps"
-                    android:text="Welcome to Icummenical"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginRight="8dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="16dp"
+                    android:text="Bem-vindo ao Icummenical"
+                    android:textAllCaps="false"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Large"
                     android:textColor="@color/textColor"
-                    android:textSize="22sp" />
+                    app:fontFamily="sans-serif-smallcaps"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
+                <!-- Campo de Email do Login -->
                 <EditText
                     android:id="@+id/edt_emailLogin"
                     android:layout_width="300dp"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_marginTop="25dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginRight="8dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="24dp"
                     android:background="@drawable/edittext_style"
-                    android:hint="Enter E-mail"
-                    android:inputType="textEmailAddress" />
+                    android:hint="email@gmail.com"
+                    android:inputType="textEmailAddress"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textView" />
 
+                <!-- Campo de Senha do Login -->
                 <EditText
                     android:id="@+id/edt_senhaLogin"
                     android:layout_width="300dp"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginRight="8dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="8dp"
                     android:background="@drawable/edittext_style"
-                    android:hint="Enter Password"
-                    android:inputType="textPassword" />
+                    android:hint="senha"
+                    android:inputType="numberPassword"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/edt_emailLogin" />
 
-                <!-- Botão de Logar -->
-                <Button
-                    android:id="@+id/btn_loginUsuario"
-                    android:layout_width="210dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="35dp"
-                    android:background="@drawable/btn_style"
-                    android:drawableRight="@drawable/ic_arrow_forward_white_24dp"
-                    android:fontFamily="sans-serif-smallcaps"
-                    android:text="Sign In"
-                    android:textAllCaps="false"
-                    android:textColor="@color/white"
-                    android:textSize="17sp" />
-
-                <ProgressBar
-                    android:id="@+id/progressBarID"
-                    android:layout_width="80dp"
-                    android:layout_height="80dp"
-                    android:layout_marginTop="4dp"
-                    android:visibility="gone" />
-
+                <!-- Botões -->
                 <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="2dp"
-                    android:layout_marginHorizontal="35dp"
-                    android:layout_marginVertical="10dp"
-                    android:background="@color/lightGrey" />
-
-                <!-- Botão de Nova Conta -->
-                <Button
-                    android:id="@+id/btn_criarNovaConta"
-                    android:layout_width="210dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/border_button"
-                    android:fontFamily="sans-serif-smallcaps"
-                    android:text="Create New Account"
-                    android:textAllCaps="false"
-                    android:textColor="@color/colorAccent"
-                    android:textSize="17sp" />
+                    android:layout_marginBottom="32dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginRight="8dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="32dp"
+                    android:gravity="center_horizontal"
+                    android:orientation="vertical"
+                    app:layout_constraintBottom_toTopOf="@+id/constraintLayout2"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/edt_senhaLogin">
 
-                <!-- Login com Mídias Sociais -->
-                <LinearLayout
+                    <ProgressBar
+                        android:id="@+id/progressBarID"
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
+                        android:visibility="visible"
+                        tools:visibility="gone" />
+
+                    <!-- Botão de Logar -->
+                    <Button
+                        android:id="@+id/btn_loginUsuario"
+                        android:layout_width="180dp"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/btn_style"
+                        android:text="Entrar"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Medium.Inverse"
+                        android:textColor="@color/white"
+                        android:visibility="visible" />
+
+                    <LinearLayout
+                        android:id="@+id/linearLayout"
+                        android:layout_width="250dp"
+                        android:layout_height="2dp"
+                        android:layout_marginBottom="10dp"
+                        android:layout_marginTop="10dp"
+                        android:background="@color/lightGrey"
+                        android:orientation="horizontal"
+                        android:visibility="visible" />
+
+                    <!-- Botão de Nova Conta -->
+                    <Button
+                        android:id="@+id/btn_criarNovaConta"
+                        android:layout_width="180dp"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/border_button"
+                        android:fontFamily="sans-serif-smallcaps"
+                        android:text="Criar Nova Conta"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                        android:textColor="@color/colorAccent" />
+
+                </LinearLayout>
+
+                <!-- Login com Redes Sociais -->
+                <android.support.constraint.ConstraintLayout
+                    android:id="@+id/constraintLayout2"
                     android:layout_width="match_parent"
-                    android:layout_height="150dp"
-                    android:layout_marginTop="25dp"
+                    android:layout_height="235dp"
                     android:background="@color/colorPrimary"
-                    android:orientation="vertical">
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="parent">
 
                     <TextView
+                        android:id="@+id/textView2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center_horizontal"
-                        android:layout_marginTop="15dp"
-                        android:fontFamily="sans-serif-smallcaps"
+                        android:layout_marginBottom="8dp"
+                        android:layout_marginEnd="8dp"
+                        android:layout_marginLeft="8dp"
+                        android:layout_marginRight="8dp"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginTop="12dp"
                         android:text="Acesse com suas Redes Sociais"
-                        android:textColor="@color/white"
-                        android:textSize="18sp" />
+                        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                        android:textColor="@android:color/white"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintVertical_bias="0.0" />
 
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center_horizontal"
-                        android:layout_marginTop="20dp"
-                        android:orientation="horizontal">
+                        android:layout_marginBottom="8dp"
+                        android:layout_marginEnd="8dp"
+                        android:layout_marginLeft="8dp"
+                        android:layout_marginRight="8dp"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginTop="8dp"
+                        android:gravity="center"
+                        android:orientation="horizontal"
+                        android:visibility="visible"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/textView2"
+                        app:layout_constraintVertical_bias="0.3">
 
                         <ImageView
                             android:id="@+id/img_login_Facebook"
-                            android:layout_width="50dp"
-                            android:layout_height="50dp"
-                            android:layout_margin="3dp"
-                            android:src="@drawable/facebook" />
+                            android:layout_width="60dp"
+                            android:layout_height="60dp"
+                            android:layout_marginLeft="4dp"
+                            android:layout_marginRight="4dp"
+                            app:srcCompat="@drawable/facebook" />
 
                         <ImageView
-                            android:layout_width="50dp"
-                            android:layout_height="50dp"
-                            android:layout_margin="3dp"
-                            android:src="@drawable/twitter" />
+                            android:layout_width="60dp"
+                            android:layout_height="60dp"
+                            android:layout_marginLeft="4dp"
+                            android:layout_marginRight="4dp"
+                            app:srcCompat="@drawable/twitter" />
 
                         <ImageView
-                            android:layout_width="50dp"
-                            android:layout_height="50dp"
-                            android:layout_margin="3dp"
-                            android:src="@drawable/linkedin" />
+                            android:layout_width="60dp"
+                            android:layout_height="60dp"
+                            android:layout_marginLeft="4dp"
+                            android:layout_marginRight="4dp"
+                            app:srcCompat="@drawable/linkedin" />
 
                         <ImageView
-                            android:layout_width="50dp"
-                            android:layout_height="50dp"
-                            android:layout_margin="3dp"
-                            android:src="@drawable/googleplus" />
+                            android:layout_width="60dp"
+                            android:layout_height="60dp"
+                            android:layout_marginLeft="4dp"
+                            android:layout_marginRight="4dp"
+                            app:srcCompat="@drawable/googleplus" />
 
                     </LinearLayout>
 
-                </LinearLayout>
+                </android.support.constraint.ConstraintLayout>
 
-
-            </LinearLayout>
+            </android.support.constraint.ConstraintLayout>
 
         </ScrollView>
 
     </android.support.v7.widget.CardView>
 
-</LinearLayout>
+</android.support.constraint.ConstraintLayout>

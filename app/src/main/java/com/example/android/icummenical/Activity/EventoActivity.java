@@ -1,33 +1,84 @@
 package com.example.android.icummenical.Activity;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.Window;
-import android.view.WindowManager;
+import android.util.Log;
 
 import com.example.android.icummenical.Classes.Adapter;
-import com.example.android.icummenical.Classes.cardItem;
+import com.example.android.icummenical.Classes.Evento;
+import com.example.android.icummenical.DAO.ConfigFirebase;
 import com.example.android.icummenical.Helper.CommonActivity;
 import com.example.android.icummenical.R;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class EventoActivity extends CommonActivity {
 
+    private RecyclerView mRecyclerView;
+    private Adapter adapter;
+    private List<Evento> mListEventos;
+
+    private DatabaseReference databaseReference;
+    private Evento todosEventos;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_evento);
 
+        mRecyclerView = findViewById(R.id.recyclerView_listaEventos);
+        databaseReference = ConfigFirebase.getDatabaseReference();
+
+        carregarRecyclerView();
+
     }
 
 
+    private void carregarRecyclerView() {
+
+        try {
+
+            mRecyclerView.setHasFixedSize(true);
+            mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+            mListEventos = new ArrayList<>();
+            databaseReference.child("Eventos").orderByChild("keyEvento").addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+
+                        todosEventos = postSnapshot.getValue(Evento.class);
+                        mListEventos.add(todosEventos);
+
+                    }
+                    adapter.notifyDataSetChanged();
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                }
+            });
+
+            adapter = new Adapter(this, mListEventos);
+            mRecyclerView.setAdapter(adapter);
+
+        } catch (Exception e) {
+            Log.d("ERRO_LISTA_EVENTOS", "-------------------------> Erro ao Exibir Lista <-------------------------");
+            showToast("Erro: " + e.getMessage());
+        }
+
+    }
 
 
-
-    //    private void listaEventos() {
+//        private void listaEventos() {
 //        // Setting the status bar background to transparent
 //        Window w = getWindow();
 //        w.setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
@@ -35,16 +86,17 @@ public class EventoActivity extends CommonActivity {
 //        //Setting recyclerview with the Adapter
 //        RecyclerView recyclerView = findViewById(R.id.recyclerViewList);
 //
-//        List<cardItem> mCardList = new ArrayList<>();
-//        mCardList.add(new cardItem(R.drawable.img_background1, "Forests", R.drawable.profile_pic1));
-//        mCardList.add(new cardItem(R.drawable.img_background2, "Lighting's", R.drawable.profile_pic3));
-//        mCardList.add(new cardItem(R.drawable.img_background3, "Lighting's and Cities", R.drawable.profile_pic4));
-//        mCardList.add(new cardItem(R.drawable.img_background1, "Forests", R.drawable.profile_pic1));
-//        mCardList.add(new cardItem(R.drawable.img_background2, "Lighting's", R.drawable.profile_pic3));
-//        mCardList.add(new cardItem(R.drawable.img_background3, "Lighting's and Cities", R.drawable.profile_pic4));
+//        List<CardItem> mCardList = new ArrayList<>();
+//        mCardList.add(new CardItem(R.drawable.img_background1, "Forests", R.drawable.profile_pic1));
+//        mCardList.add(new CardItem(R.drawable.img_background2, "Lighting's", R.drawable.profile_pic3));
+//        mCardList.add(new CardItem(R.drawable.img_background3, "Lighting's and Cities", R.drawable.profile_pic4));
+//        mCardList.add(new CardItem(R.drawable.img_background1, "Forests", R.drawable.profile_pic1));
+//        mCardList.add(new CardItem(R.drawable.img_background2, "Lighting's", R.drawable.profile_pic3));
+//        mCardList.add(new CardItem(R.drawable.img_background3, "Lighting's and Cities", R.drawable.profile_pic4));
 //
 //        Adapter adapter = new Adapter(this, mCardList);
 //        recyclerView.setAdapter(adapter);
 //        recyclerView.setLayoutManager(new LinearLayoutManager(this));
 //    }
+
 }
