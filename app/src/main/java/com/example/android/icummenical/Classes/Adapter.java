@@ -1,6 +1,7 @@
 package com.example.android.icummenical.Classes;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
@@ -12,9 +13,8 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.example.android.icummenical.Activity.PerfilUsuarioActivity;
+import com.example.android.icummenical.Activity.DetalhesEventoActivity;
 import com.example.android.icummenical.DAO.ConfigFirebase;
 import com.example.android.icummenical.R;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -55,14 +55,14 @@ public class Adapter extends RecyclerView.Adapter<Adapter.myViewHolder> {
     @Override
     public void onBindViewHolder(@NonNull final Adapter.myViewHolder holder, int position) {
 
-        final Evento eventoItem = mListEvento.get(position);
+        final Evento itemEvento = mListEvento.get(position);
         eventos = new ArrayList<>();
 
         FirebaseStorage storage = FirebaseStorage.getInstance();
-        final StorageReference storageReference = storage.getReferenceFromUrl("gs://icummenical.appspot.com/fotoEvento-" + eventoItem.getTitulo() + "/" + eventoItem.getTitulo() + ".jpg");
+        final StorageReference storageReference = storage.getReferenceFromUrl("gs://icummenical.appspot.com/fotoEvento-" + itemEvento.getTitulo() + "/" + itemEvento.getTitulo() + ".jpg");
 
         databaseReference = ConfigFirebase.getDatabaseReference();
-        databaseReference.child("Eventos").orderByChild("keyEvento").equalTo(eventoItem.getKeyEvento()).addValueEventListener(new ValueEventListener() {
+        databaseReference.child("Eventos").orderByChild("keyEvento").equalTo(itemEvento.getKeyEvento()).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 eventos.clear();
@@ -100,10 +100,52 @@ public class Adapter extends RecyclerView.Adapter<Adapter.myViewHolder> {
             }
         });
 
-        holder.txtTituloEvento.setText(eventoItem.getTitulo());
-        holder.txtLocalEvento.setText(eventoItem.getLocal());
-        holder.txtHorarioEvento.setText(eventoItem.getHorario());
-        holder.txtDataEvento.setText(eventoItem.getData());
+        holder.txtTituloEvento.setText(itemEvento.getTitulo());
+        holder.txtLocalEvento.setText(itemEvento.getLocal());
+        holder.txtHorarioEvento.setText(itemEvento.getHorario());
+        holder.txtDataEvento.setText(itemEvento.getData());
+
+        holder.btnDetalhesEvento.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //                Intent detalheEvento = new Intent(context, DetalhesEventoActivity.class);
+                //                detalheEvento.putExtra("tituloEvento", holder.txtTituloEvento.getText());
+                //                context.startActivity(detalheEvento);
+
+                databaseReference.child("Eventos").orderByChild("keyEvento").equalTo(itemEvento.getKeyEvento()).addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        for(DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+
+                            todosEventos = postSnapshot.getValue(Evento.class);
+
+                            Intent detalheEvento = new Intent(context, DetalhesEventoActivity.class);
+                            detalheEvento.putExtra("tituloEvento", itemEvento.getTitulo());
+                            detalheEvento.putExtra("localEvento", itemEvento.getLocal());
+                            detalheEvento.putExtra("horarioEvento", itemEvento.getHorario());
+                            detalheEvento.putExtra("dataEvento", itemEvento.getData());
+                            detalheEvento.putExtra("descricaoEvento", itemEvento.getDescricao());
+                            detalheEvento.putExtra("atividadesEvento", itemEvento.getAtividades());
+                            context.startActivity(detalheEvento);
+
+                            Log.d("ITEM_CLICADO", "Titulo: " +       itemEvento.getTitulo() +
+                                                            "\nLocal: " +      itemEvento.getLocal() +
+                                                            "\nHorario: " +    itemEvento.getHorario() +
+                                                            "\nData: " +       itemEvento.getData() +
+                                                            "\nDescrição: " +  itemEvento.getDescricao() +
+                                                            "\nAtividades: " + itemEvento.getAtividades());
+
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
+
+            }
+        });
 
     }
 

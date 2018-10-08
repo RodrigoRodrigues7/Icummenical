@@ -30,8 +30,7 @@
                 android:id="@+id/img_backgroundCardEvento"
                 android:layout_width="match_parent"
                 android:layout_height="170dp"
-                android:scaleType="centerCrop"
-                android:src="@drawable/img_background1" />
+                android:scaleType="centerCrop" />
 
             <TextView
                 android:id="@+id/txt_tituloCardEvento"

@@ -207,12 +207,6 @@ public class PerfilUsuarioActivity extends CommonActivity {
         finish();
     }
 
-    private void abrirTelaLogin() {
-        Intent abrirTelaLogin = new Intent(PerfilUsuarioActivity.this, LoginActivity.class);
-        startActivity(abrirTelaLogin);
-        finish();
-    }
-
     private void abrirTelaEditarPerfil() {
 
         String emailUsuarioLogado = mAuth.getCurrentUser().getEmail();
@@ -243,6 +237,12 @@ public class PerfilUsuarioActivity extends CommonActivity {
             }
         });
 
+    }
+
+    private void abrirTelaLogin() {
+        Intent abrirTelaLogin = new Intent(PerfilUsuarioActivity.this, LoginActivity.class);
+        startActivity(abrirTelaLogin);
+        finish();
     }
 
     private void abrirAlertdialogConfirmarExclusao() {
@@ -280,3 +280,15 @@ public class PerfilUsuarioActivity extends CommonActivity {
     }
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
