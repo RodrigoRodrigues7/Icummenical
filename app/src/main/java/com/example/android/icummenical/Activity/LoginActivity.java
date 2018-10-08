@@ -196,7 +196,9 @@ public class LoginActivity extends CommonActivity {
     private void validarLogin() {
 
         mAuth = ConfigFirebase.getFirebaseAuth();
-        mAuth.signInWithEmailAndPassword(usuario.getEmail().toString(), usuario.getSenha().toString()).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+        Preferences preferences = new Preferences(LoginActivity.this);
+
+        mAuth.signInWithEmailAndPassword(usuario.getEmail(), usuario.getSenha()).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
 

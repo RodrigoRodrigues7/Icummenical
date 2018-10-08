@@ -88,13 +88,13 @@ public class PerfilUsuarioActivity extends CommonActivity {
         btnExcluirConta = findViewById(R.id.btn_excluirConta);
         btnVoltarMenu = findViewById(R.id.btn_voltarMenuPrincipal);
 
-        imgFotoUsuario.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent abrirGaleria = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI);
-                startActivityForResult(Intent.createChooser(abrirGaleria, "Selecione uma Imagen: "), GALLERY_CODE);
-            }
-        });
+//        imgFotoUsuario.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent abrirGaleria = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI);
+//                startActivityForResult(Intent.createChooser(abrirGaleria, "Selecione uma Imagen: "), GALLERY_CODE);
+//            }
+//        });
 
         btnEditarPerfil.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -135,31 +135,6 @@ public class PerfilUsuarioActivity extends CommonActivity {
     }
 
 //--------------------------------------------------------------------------------------------------
-
-    private void salvarFoto() {
-
-        StorageReference imageReference = storageReference.child("fotoPerfilUsuario-" + emailUsuarioLogado + "/" + emailUsuarioLogado + ".jpg");
-
-        imgFotoUsuario.setDrawingCacheEnabled(true);
-        imgFotoUsuario.buildDrawingCache();
-
-        Bitmap bitmap = imgFotoUsuario.getDrawingCache();
-
-        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, outputStream);
-
-        byte[] data = outputStream.toByteArray();
-        UploadTask uploadTask = imageReference.putBytes(data);
-
-        uploadTask.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-            @Override
-            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                Uri downloadUrl = taskSnapshot.getUploadSessionUri();
-                carregarFotoPadrao();
-            }
-        });
-
-    }
 
     private void carregarFotoPadrao() {
 

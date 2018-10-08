@@ -1,22 +1,30 @@
 package com.example.android.icummenical.Classes;
 
 import android.content.Context;
+import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.example.android.icummenical.Activity.PerfilUsuarioActivity;
 import com.example.android.icummenical.DAO.ConfigFirebase;
 import com.example.android.icummenical.R;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -50,6 +58,9 @@ public class Adapter extends RecyclerView.Adapter<Adapter.myViewHolder> {
         final Evento eventoItem = mListEvento.get(position);
         eventos = new ArrayList<>();
 
+        FirebaseStorage storage = FirebaseStorage.getInstance();
+        final StorageReference storageReference = storage.getReferenceFromUrl("gs://icummenical.appspot.com/fotoEvento-" + eventoItem.getTitulo() + "/" + eventoItem.getTitulo() + ".jpg");
+
         databaseReference = ConfigFirebase.getDatabaseReference();
         databaseReference.child("Eventos").orderByChild("keyEvento").equalTo(eventoItem.getKeyEvento()).addValueEventListener(new ValueEventListener() {
             @Override
@@ -64,7 +75,22 @@ public class Adapter extends RecyclerView.Adapter<Adapter.myViewHolder> {
                     final int height = (displayMetrics.heightPixels / 4);
                     final int width = (displayMetrics.widthPixels / 2);
 
-                    Picasso.with(context).load(todosEventos.getBackground()).resize(width, height).centerCrop().into(holder.imgBackgroundCardEvento);
+                    storageReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                        @Override
+                        public void onSuccess(Uri uri) {
+                            Picasso.with(context).load(uri.toString()).resize(width, height).centerCrop().into(holder.imgBackgroundCardEvento);
+
+                        }
+                    }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Log.d("ERROR_LOAD_PHOTO", "------------------------> Erro ao Carregar Foto <------------------------");
+
+                        }
+                    });
+
+//                    Picasso.with(context).load(todosEventos.getBackground()).resize(width, height).centerCrop().into(holder.imgBackgroundCardEvento);
+
                 }
             }
 

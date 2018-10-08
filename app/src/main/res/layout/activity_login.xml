@@ -84,7 +84,7 @@
                     android:layout_marginTop="8dp"
                     android:background="@drawable/edittext_style"
                     android:hint="senha"
-                    android:inputType="numberPassword"
+                    android:inputType="textPassword"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/edt_emailLogin" />
@@ -120,6 +120,7 @@
                         android:layout_height="wrap_content"
                         android:background="@drawable/btn_style"
                         android:text="Entrar"
+                        android:drawableRight="@drawable/ic_arrow_forward"
                         android:textAppearance="@style/TextAppearance.AppCompat.Medium.Inverse"
                         android:textColor="@color/white"
                         android:visibility="visible" />

@@ -205,5 +205,4 @@ public class CriarContaUsuarioActivity extends CommonActivity {
         return true;
     }
 
-
 }

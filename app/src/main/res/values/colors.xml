@@ -12,7 +12,7 @@
     <color name="transparent">#00000000</color>
     <color name="textColor">#454545</color>
 
-    <color name="alertDialog_Red">#FF3943</color>
+    <color name="alertDialog_Red">#ff3943</color>
     <color name="alertDialog_Red_Dark">#801B20</color>
 
 </resources>

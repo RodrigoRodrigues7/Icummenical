@@ -1,7 +1,13 @@
 package com.example.android.icummenical.Activity;
 
+import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.net.Uri;
+import android.provider.MediaStore;
+import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
 import android.os.Bundle;
 import android.view.View;
@@ -17,31 +23,42 @@ import com.example.android.icummenical.Classes.TimePickerFragment;
 import com.example.android.icummenical.DAO.ConfigFirebase;
 import com.example.android.icummenical.Helper.CommonActivity;
 import com.example.android.icummenical.R;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
+import com.squareup.picasso.Picasso;
 
+import java.io.ByteArrayOutputStream;
 import java.text.DateFormat;
 import java.util.Calendar;
 
 public class CadastrarEventoActivity extends CommonActivity implements DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener {
 
-    private ImageView imgDatePicker, imgTimePicker;
+    private static final int GALLERY_CODE = 2444;
+    private ImageView imgFotoEvento, imgDatePicker, imgTimePicker;
     private EditText edtTitulo, edtData, edtHorario, edtLocal, edtDescricao, edtAtividade;
-    private Button btnRegistrarEvento;
+    private Button btnRegistrarEvento, btnMenuPrincipal;
 
-    private FirebaseAuth mAuth;
-    private FirebaseDatabase mDatabase;
-    private DatabaseReference mdbReference;
     private Evento evento;
+    private String tituloEvento;
+
+    private DatabaseReference databaseReference;
+    private StorageReference storageReference;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cadastrar_evento);
 
-        mdbReference = FirebaseDatabase.getInstance().getReference();
+        databaseReference = ConfigFirebase.getDatabaseReference();
+        storageReference = ConfigFirebase.getStorageReference();
 
+        imgFotoEvento = findViewById(R.id.img_FotoEvento);
         imgDatePicker = findViewById(R.id.imgView_datePicker);
         imgTimePicker = findViewById(R.id.imgView_timePicker);
 
@@ -53,17 +70,40 @@ public class CadastrarEventoActivity extends CommonActivity implements DatePicke
         edtAtividade = findViewById(R.id.edt_atividadeEvento);
 
         btnRegistrarEvento = findViewById(R.id.btn_registrarEvento);
+        btnMenuPrincipal = findViewById(R.id.btn_voltarMenuPrincipal);
+
+
+        imgFotoEvento.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                selecionarFotoEvento();
+            }
+        });
+
+        imgDatePicker.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DialogFragment dialog = new DatePickerFragment();
+                dialog.show(getSupportFragmentManager(), "Date Picker");
+            }
+        });
+
+        imgTimePicker.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DialogFragment dialog = new TimePickerFragment();
+                dialog.show(getSupportFragmentManager(), "TimePicker");
+            }
+        });
+
 
         btnRegistrarEvento.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 try {
 
                     if (verificarCampos() == false) {
-
                         showToast("Preencha Todos os Campos!");
-
                     } else {
                         registrarEvento();
                     }
@@ -71,35 +111,34 @@ public class CadastrarEventoActivity extends CommonActivity implements DatePicke
                 } catch (Exception error) {
                     showToast("Erro: " + error.getMessage());
                 }
-
             }
         });
 
-
-        imgDatePicker.setOnClickListener(new View.OnClickListener() {
+        btnMenuPrincipal.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                DialogFragment dialog = new DatePickerFragment();
-                dialog.show(getSupportFragmentManager(), "Date Picker");
-
-            }
-        });
-
-        imgTimePicker.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                DialogFragment dialog = new TimePickerFragment();
-                dialog.show(getSupportFragmentManager(), "TimePicker");
-
+                abrirMenuPrincipal();
             }
         });
 
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
-//------------------------------ REFERENTE AO DATE E TIME PICKER'S ---------------------------------
+        final int width = 300;
+        final int height = 300;
+
+        if (resultCode == Activity.RESULT_OK) {
+            if (requestCode == GALLERY_CODE) {
+                Uri imagemSelecionada = data.getData();
+                Picasso.with(CadastrarEventoActivity.this).load(imagemSelecionada.toString()).resize(width, height).centerCrop().into(imgFotoEvento);
+            }
+        }
+
+    }
+
+//--------------------------------------------------------------------------------------------------
 
     @Override
     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
@@ -119,7 +158,67 @@ public class CadastrarEventoActivity extends CommonActivity implements DatePicke
         edtHorario.setText(hourOfDay + ":" + minute);
     }
 
+    private void abrirMenuPrincipal() {
+        Intent menuPrincipal = new Intent(CadastrarEventoActivity.this, PrincipalActivity.class);
+        startActivity(menuPrincipal);
+        finish();
+    }
+
+    private void selecionarFotoEvento() {
+        Intent abrirGaleria = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI);
+        startActivityForResult(Intent.createChooser(abrirGaleria, "Selecione uma Imagen: "), GALLERY_CODE);
+    }
+
+    private void carregarFotoEvento() {
+
+        FirebaseStorage storage = FirebaseStorage.getInstance();
+        final StorageReference storageReference = storage.getReferenceFromUrl("gs://icummenical.appspot.com/fotoEvento-" + tituloEvento + "/" + tituloEvento + ".jpg");
+
+        final int width = 300;
+        final int height = 300;
+
+        storageReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+            @Override
+            public void onSuccess(Uri uri) {
+                Picasso.with(CadastrarEventoActivity.this).load(uri.toString()).resize(width, height).centerCrop().into(imgFotoEvento);
+
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                showToast("Imagem Não Encontrada");
+            }
+        });
+
+    }
+
 //--------------------------------------------------------------------------------------------------
+
+    private void salvarFoto() {
+
+        tituloEvento = evento.getTitulo();
+        StorageReference imageReference = storageReference.child("fotoEvento-" + tituloEvento + "/" + tituloEvento + ".jpg");
+
+        imgFotoEvento.setDrawingCacheEnabled(true);
+        imgFotoEvento.buildDrawingCache();
+
+        Bitmap bitmap = imgFotoEvento.getDrawingCache();
+
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, outputStream);
+
+        byte[] data = outputStream.toByteArray();
+        UploadTask uploadTask = imageReference.putBytes(data);
+
+        uploadTask.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                Uri downloadUrl = taskSnapshot.getUploadSessionUri();
+                carregarFotoEvento();
+            }
+        });
+
+    }
 
     private void registrarEvento() {
 
@@ -131,23 +230,28 @@ public class CadastrarEventoActivity extends CommonActivity implements DatePicke
         evento.setDescricao(edtDescricao.getText().toString());
         evento.setAtividades(edtAtividade.getText().toString());
 
+        salvarFoto();
         insertEvento(evento);
+        abrirMenuPrincipal();
     }
 
     private boolean insertEvento(Evento evento) {
 
         try {
+            databaseReference = ConfigFirebase.getDatabaseReference().child("Eventos");
+            String key = databaseReference.push().getKey();
+            evento.setKeyEvento(key);
 
-            mdbReference = ConfigFirebase.getDatabaseReference().child("Eventos");
-            mdbReference.push().setValue(evento);
+            databaseReference.child(key).setValue(evento);
+//            databaseReference.push().setValue(evento);
             showToast("Evento Registrado com Sucesso!");
             return true;
 
         } catch (Exception e) {
-
             showToast("Errro ao Registrar o Evento!");
             e.printStackTrace();
             return false;
+
         }
 
     }
@@ -157,8 +261,8 @@ public class CadastrarEventoActivity extends CommonActivity implements DatePicke
         if (edtTitulo.getText().toString().trim().equals("")) {
             showToast("Preencha o Campo do Título!");
             return false;
-        } else if (edtData.getText().toString().trim().equals("") && edtHorario.getText().toString().trim().equals("")) {
-            showToast("Preencha o Campo da Data e Horario!");
+        } else if (edtData.getText().toString().trim().equals("") || edtHorario.getText().toString().trim().equals("")) {
+            showToast("Preencha os Campos de Data e Horario!");
             return false;
         } else if (edtLocal.getText().toString().trim().equals("")) {
             showToast("Preencha o Campo do Local!");
@@ -175,20 +279,3 @@ public class CadastrarEventoActivity extends CommonActivity implements DatePicke
     }
 
 }
-
-
-//    public void salvarEvento_1(View view) {
-//
-//        Evento evento = new Evento("Primeiro Evento do Icummenical",
-//                "25 de Setembro de 2018",
-//                "8:45",
-//                "Faculdade Ibratec",
-//                "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean sed interdum augue. Cras id porttitor orci. Praesent at scelerisque erat. In aliquet semper arcu id condimentum.",
-//                "Apresentar, Discurtir, Debater, Conclusão");
-//        mdbReference.child(evento.getTitulo()).setValue(evento);
-//    }
-
-
-
-
-

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -14,14 +14,17 @@
         app:cardCornerRadius="10dp"
         app:cardElevation="5dp"
         app:cardPreventCornerOverlap="true"
-        app:cardUseCompatPadding="true">
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_gravity="center">
 
-            <RelativeLayout
+            <android.support.constraint.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
@@ -58,21 +61,49 @@
                     android:id="@+id/imageView1"
                     android:layout_width="20dp"
                     android:layout_height="20dp"
-                    android:layout_below="@+id/linearLayout1"
                     android:layout_centerHorizontal="true"
-                    android:layout_marginTop="-10dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginRight="8dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="120dp"
                     android:rotation="45"
-                    android:src="@drawable/square" />
+                    android:src="@drawable/square"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/linearLayout1" />
 
-
+                <!-- Foto do Evento -->
+                <ImageView
+                    android:id="@+id/img_FotoEvento"
+                    android:layout_width="match_parent"
+                    android:layout_height="150dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginRight="8dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="8dp"
+                    android:background="@drawable/selecione_foto"
+                    android:scaleType="centerCrop"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="1.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/imageView1" />
+                
                 <!-- Titulo do Evento -->
                 <RelativeLayout
-                    android:id="@+id/relativeLayout1"
+                    android:id="@+id/layout_TituloEvento"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/imageView1"
-                    android:layout_marginHorizontal="20dp"
-                    android:layout_marginTop="20dp">
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginRight="8dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="8dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/img_FotoEvento">
 
                     <ImageView
                         android:id="@+id/imgView_userIcon"
@@ -91,20 +122,26 @@
                         android:layout_toRightOf="@+id/imgView_userIcon"
                         android:background="@color/azur"
                         android:hint="Titulo do Evento"
+                        android:inputType="textPersonName"
                         android:paddingLeft="10dp"
-                        android:textColor="@color/textColor"
-                        android:textSize="17sp" />
+                        android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
 
                 </RelativeLayout>
 
-                <!-- Datas do Evento -->
+                <!-- Data e Horario do Evento -->
                 <RelativeLayout
-                    android:id="@+id/relativeLayout2"
+                    android:id="@+id/layout_DataHorarioEvento"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/relativeLayout1"
-                    android:layout_marginHorizontal="20dp"
-                    android:layout_marginTop="20dp">
+                    android:layout_below="@+id/layout_TituloEvento"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginRight="8dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="16dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/layout_TituloEvento">
 
                     <ImageView
                         android:id="@+id/imgView_datePicker"
@@ -123,7 +160,7 @@
                         android:layout_toRightOf="@+id/imgView_datePicker"
                         android:fontFamily="sans-serif-smallcaps"
                         android:hint="DD/MM/AAAA"
-                        android:inputType="text"
+                        android:inputType="text|date"
                         android:textAlignment="center"
                         android:textSize="15sp" />
 
@@ -145,22 +182,25 @@
                         android:layout_toRightOf="@+id/imgView_timePicker"
                         android:fontFamily="sans-serif-smallcaps"
                         android:hint="00:00"
-                        android:inputType="time"
+                        android:inputType="text|time"
                         android:textAlignment="center"
                         android:textSize="15sp" />
-
 
                 </RelativeLayout>
 
                 <!-- Local do Evento -->
                 <RelativeLayout
-                    android:id="@+id/relativeLayout3"
+                    android:id="@+id/layout_LocalEvento"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/relativeLayout2"
-                    android:layout_marginLeft="20dp"
-                    android:layout_marginRight="20dp"
-                    android:layout_marginTop="20dp">
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginRight="8dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="16dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/layout_DataHorarioEvento">
 
                     <ImageView
                         android:id="@+id/imgView_local"
@@ -180,6 +220,7 @@
                         android:layout_toRightOf="@+id/imgView_local"
                         android:background="@color/azur"
                         android:hint="Local do Evento"
+                        android:inputType="text"
                         android:paddingLeft="10dp"
                         android:textColor="@color/textColor"
                         android:textSize="17sp" />
@@ -187,13 +228,20 @@
                 </RelativeLayout>
 
                 <!-- Descrição do Evento -->
+
+                <!-- Atividades do Evento -->
                 <RelativeLayout
-                    android:id="@+id/relativeLayout4"
+                    android:id="@+id/layout_DescricaoEvento"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/relativeLayout3"
-                    android:layout_marginHorizontal="20dp"
-                    android:layout_marginTop="20dp">
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginRight="8dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="16dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/layout_LocalEvento">
 
                     <EditText
                         android:id="@+id/edt_descricaoEvento"
@@ -206,14 +254,18 @@
 
                 </RelativeLayout>
 
-                <!-- Atividades do Evento -->
                 <RelativeLayout
-                    android:id="@+id/relativeLayout5"
+                    android:id="@+id/layout_AtividadesEvento"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/relativeLayout4"
-                    android:layout_marginHorizontal="20dp"
-                    android:layout_marginTop="20dp">
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginRight="8dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="16dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/layout_DescricaoEvento">
 
                     <EditText
                         android:id="@+id/edt_atividadeEvento"
@@ -228,20 +280,62 @@
                     android:id="@+id/btn_registrarEvento"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/relativeLayout5"
-                    android:layout_marginBottom="16dp"
-                    android:layout_marginHorizontal="30dp"
-                    android:layout_marginTop="20dp"
+                    android:layout_marginEnd="64dp"
+                    android:layout_marginLeft="64dp"
+                    android:layout_marginRight="64dp"
+                    android:layout_marginStart="64dp"
+                    android:layout_marginTop="24dp"
                     android:background="@drawable/btn_style"
-                    android:drawableRight="@drawable/ic_arrow_forward_white_24dp"
+                    android:drawableRight="@drawable/ic_arrow_forward"
                     android:fontFamily="sans-serif-smallcaps"
                     android:text="Registrar Evento"
-                    android:textColor="@color/white" />
+                    android:textColor="@color/white"
+                    android:textSize="16sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/layout_AtividadesEvento" />
 
-            </RelativeLayout>
+                <LinearLayout
+                    android:id="@+id/linearLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:layout_marginEnd="32dp"
+                    android:layout_marginLeft="32dp"
+                    android:layout_marginRight="32dp"
+                    android:layout_marginStart="32dp"
+                    android:layout_marginTop="8dp"
+                    android:background="@color/lightGrey"
+                    android:orientation="horizontal"
+                    android:visibility="visible"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/btn_registrarEvento" />
+
+                <!-- Botão de Nova Conta -->
+                <Button
+                    android:id="@+id/btn_voltarMenuPrincipal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
+                    android:layout_marginEnd="64dp"
+                    android:layout_marginLeft="64dp"
+                    android:layout_marginRight="64dp"
+                    android:layout_marginStart="64dp"
+                    android:layout_marginTop="8dp"
+                    android:background="@drawable/border_button"
+                    android:fontFamily="sans-serif-smallcaps"
+                    android:text="Voltar ao Menu Principal"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                    android:textColor="@color/colorAccent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
+
+            </android.support.constraint.ConstraintLayout>
 
         </ScrollView>
 
     </android.support.v7.widget.CardView>
 
-</RelativeLayout>
+</android.support.constraint.ConstraintLayout>
