@@ -44,6 +44,5 @@ public class DetalhesEventoActivity extends CommonActivity {
             atividadesEvento.setText(atividades);
         }
     }
-
-
+    
 }

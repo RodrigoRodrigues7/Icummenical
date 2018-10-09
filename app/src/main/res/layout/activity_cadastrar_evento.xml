@@ -89,7 +89,7 @@
                     app:layout_constraintHorizontal_bias="1.0"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/imageView1" />
-                
+
                 <!-- Titulo do Evento -->
                 <RelativeLayout
                     android:id="@+id/layout_TituloEvento"
@@ -227,8 +227,6 @@
 
                 </RelativeLayout>
 
-                <!-- Descrição do Evento -->
-
                 <!-- Atividades do Evento -->
                 <RelativeLayout
                     android:id="@+id/layout_DescricaoEvento"
@@ -254,6 +252,7 @@
 
                 </RelativeLayout>
 
+                <!-- Descrição do Evento -->
                 <RelativeLayout
                     android:id="@+id/layout_AtividadesEvento"
                     android:layout_width="match_parent"
@@ -311,7 +310,6 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/btn_registrarEvento" />
 
-                <!-- Botão de Nova Conta -->
                 <Button
                     android:id="@+id/btn_voltarMenuPrincipal"
                     android:layout_width="match_parent"
