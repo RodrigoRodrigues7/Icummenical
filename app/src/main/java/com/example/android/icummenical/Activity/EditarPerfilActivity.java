@@ -1,5 +1,6 @@
 package com.example.android.icummenical.Activity;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
@@ -89,6 +90,21 @@ public class EditarPerfilActivity extends CommonActivity {
 
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+        final int width = 300;
+        final int height = 300;
+
+        if (resultCode == Activity.RESULT_OK) {
+            if (requestCode == GALLERY_CODE) {
+                Uri imagemSelecionada = data.getData();
+                Picasso.with(EditarPerfilActivity.this).load(imagemSelecionada.toString()).resize(width, height).centerCrop().into(imgFotoPerfil);
+            }
+        }
+
+    }
+
 //--------------------------------------------------------------------------------------------------
 
     private void salvarDadosPerfil() {
@@ -102,9 +118,10 @@ public class EditarPerfilActivity extends CommonActivity {
             usuario.setKeyUsuario(txtKeyUsuario);
 
             updateUsuario(usuario);
+            abrirTelaPrincipal();
 
         } else {
-            showToast("Por Favor, Verifique se a 'Senha' está Correta, e Escolha uma Imagem de Perfil.");
+            showToast("Por Favor, Verifique se a 'Senha' está Correta.");
             senhaUsuario.requestFocus();
             senhaUsuario.setText("");
             confirmarSenhaUsuario.setText("");

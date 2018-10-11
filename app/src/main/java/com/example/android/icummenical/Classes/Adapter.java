@@ -3,6 +3,7 @@ package com.example.android.icummenical.Classes;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.util.DisplayMetrics;
@@ -89,8 +90,6 @@ public class Adapter extends RecyclerView.Adapter<Adapter.myViewHolder> {
                         }
                     });
 
-//                    Picasso.with(context).load(todosEventos.getBackground()).resize(width, height).centerCrop().into(holder.imgBackgroundCardEvento);
-
                 }
             }
 
@@ -108,33 +107,26 @@ public class Adapter extends RecyclerView.Adapter<Adapter.myViewHolder> {
         holder.btnDetalhesEvento.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //                Intent detalheEvento = new Intent(context, DetalhesEventoActivity.class);
-                //                detalheEvento.putExtra("tituloEvento", holder.txtTituloEvento.getText());
-                //                context.startActivity(detalheEvento);
 
                 databaseReference.child("Eventos").orderByChild("keyEvento").equalTo(itemEvento.getKeyEvento()).addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        for(DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+                        for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
 
                             todosEventos = postSnapshot.getValue(Evento.class);
+                            final Intent detalheEvento = new Intent(context, DetalhesEventoActivity.class);
+                            final Bundle bundle = new Bundle();
 
-                            Intent detalheEvento = new Intent(context, DetalhesEventoActivity.class);
-                            detalheEvento.putExtra("tituloEvento", itemEvento.getTitulo());
-                            detalheEvento.putExtra("localEvento", itemEvento.getLocal());
-                            detalheEvento.putExtra("horarioEvento", itemEvento.getHorario());
-                            detalheEvento.putExtra("dataEvento", itemEvento.getData());
-                            detalheEvento.putExtra("descricaoEvento", itemEvento.getDescricao());
-                            detalheEvento.putExtra("atividadesEvento", itemEvento.getAtividades());
+                            bundle.putString("detalhesEvento", "editarEvento");
+                            bundle.putString("tituloEvento", itemEvento.getTitulo());
+                            bundle.putString("localEvento", itemEvento.getLocal());
+                            bundle.putString("horarioEvento", itemEvento.getHorario());
+                            bundle.putString("dataEvento", itemEvento.getData());
+                            bundle.putString("descricaoEvento", itemEvento.getDescricao());
+                            bundle.putString("atividadesEvento", itemEvento.getAtividades());
+
+                            detalheEvento.putExtras(bundle);
                             context.startActivity(detalheEvento);
-
-                            Log.d("ITEM_CLICADO", "Titulo: " +       itemEvento.getTitulo() +
-                                                            "\nLocal: " +      itemEvento.getLocal() +
-                                                            "\nHorario: " +    itemEvento.getHorario() +
-                                                            "\nData: " +       itemEvento.getData() +
-                                                            "\nDescrição: " +  itemEvento.getDescricao() +
-                                                            "\nAtividades: " + itemEvento.getAtividades());
-
                         }
                     }
 

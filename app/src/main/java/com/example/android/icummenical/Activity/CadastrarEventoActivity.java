@@ -25,9 +25,7 @@ import com.example.android.icummenical.Helper.CommonActivity;
 import com.example.android.icummenical.R;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
@@ -41,7 +39,7 @@ public class CadastrarEventoActivity extends CommonActivity implements DatePicke
 
     private static final int GALLERY_CODE = 2444;
     private ImageView imgFotoEvento, imgDatePicker, imgTimePicker;
-    private EditText edtTitulo, edtData, edtHorario, edtLocal, edtDescricao, edtAtividade;
+    private EditText edtTitulo, edtData, edtHorario, edtLocal, edtDescricao, edtAtividades;
     private Button btnRegistrarEvento, btnMenuPrincipal;
 
     private Evento evento;
@@ -59,17 +57,17 @@ public class CadastrarEventoActivity extends CommonActivity implements DatePicke
         storageReference = ConfigFirebase.getStorageReference();
 
         imgFotoEvento = findViewById(R.id.img_FotoEvento);
-        imgDatePicker = findViewById(R.id.imgView_datePicker);
-        imgTimePicker = findViewById(R.id.imgView_timePicker);
+        imgDatePicker = findViewById(R.id.imgView_datePickerAtualizar);
+        imgTimePicker = findViewById(R.id.imgView_timePickerAtualizar);
 
         edtTitulo = findViewById(R.id.edt_tituloEvento);
-        edtData = findViewById(R.id.edt_dataEvento);
+        edtData = findViewById(R.id.edt_dataAtualizarEvento);
         edtHorario = findViewById(R.id.edt_horarioEvento);
         edtLocal = findViewById(R.id.edt_localEvento);
         edtDescricao = findViewById(R.id.edt_descricaoEvento);
-        edtAtividade = findViewById(R.id.edt_atividadeEvento);
+        edtAtividades = findViewById(R.id.edt_atividadeEvento);
 
-        btnRegistrarEvento = findViewById(R.id.btn_registrarEvento);
+        btnRegistrarEvento = findViewById(R.id.btn_salvarEvento);
         btnMenuPrincipal = findViewById(R.id.btn_voltarMenuPrincipal);
 
 
@@ -101,13 +99,11 @@ public class CadastrarEventoActivity extends CommonActivity implements DatePicke
             @Override
             public void onClick(View v) {
                 try {
-
                     if (verificarCampos() == false) {
                         showToast("Preencha Todos os Campos!");
                     } else {
                         registrarEvento();
                     }
-
                 } catch (Exception error) {
                     showToast("Erro: " + error.getMessage());
                 }
@@ -155,7 +151,7 @@ public class CadastrarEventoActivity extends CommonActivity implements DatePicke
     @Override
     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
 
-        edtHorario.setText(hourOfDay + ":" + minute);
+        edtHorario.setText(String.format("%02d:%02d", hourOfDay, minute));
     }
 
     private void abrirMenuPrincipal() {
@@ -228,7 +224,7 @@ public class CadastrarEventoActivity extends CommonActivity implements DatePicke
         evento.setHorario(edtHorario.getText().toString());
         evento.setLocal(edtLocal.getText().toString());
         evento.setDescricao(edtDescricao.getText().toString());
-        evento.setAtividades(edtAtividade.getText().toString());
+        evento.setAtividades(edtAtividades.getText().toString());
 
         salvarFoto();
         insertEvento(evento);
@@ -270,7 +266,7 @@ public class CadastrarEventoActivity extends CommonActivity implements DatePicke
         } else if (edtDescricao.getText().toString().trim().equals("")) {
             showToast("Preencha o Campo da Descrição!");
             return false;
-        } else if (edtAtividade.getText().toString().trim().equals("")) {
+        } else if (edtAtividades.getText().toString().trim().equals("")) {
             showToast("Preencha o Campo das Atividades!");
             return false;
         }

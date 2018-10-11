@@ -4,16 +4,17 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="8dp"
-    tools:context=".Activity.CadastrarEventoActivity">
+    android:background="@color/azur"
+    tools:context=".Activity.AtualizarEventoActivity">
 
     <android.support.v7.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_centerInParent="true"
-        app:cardCornerRadius="10dp"
-        app:cardElevation="5dp"
-        app:cardPreventCornerOverlap="true"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -21,75 +22,32 @@
 
         <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_gravity="center">
+            android:layout_height="match_parent">
 
             <android.support.constraint.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-                <LinearLayout
-                    android:id="@+id/linearLayout1"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@color/colorPrimary"
-                    android:gravity="center"
-                    android:orientation="vertical">
-
-                    <ImageView
-                        android:layout_width="70dp"
-                        android:layout_height="70dp"
-                        android:layout_marginTop="16dp"
-                        android:background="@drawable/circulo"
-                        android:padding="8dp"
-                        android:src="@drawable/ic_assignment"
-                        android:tint="@color/white" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginVertical="10dp"
-                        android:fontFamily="sans-serif-smallcaps"
-                        android:text="Registrar Novo Evento"
-                        android:textColor="@color/white"
-                        android:textSize="20sp" />
-
-                </LinearLayout>
-
+                <!-- Titulo do Evento -->
                 <ImageView
-                    android:id="@+id/imageView1"
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:layout_centerHorizontal="true"
-                    android:layout_marginEnd="8dp"
-                    android:layout_marginLeft="8dp"
-                    android:layout_marginRight="8dp"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginTop="120dp"
-                    android:rotation="45"
-                    android:src="@drawable/square"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="@+id/linearLayout1" />
-
-                <!-- Foto do Evento -->
-                <ImageView
-                    android:id="@+id/img_FotoEvento"
+                    android:id="@+id/img_fotoAtualizarEvento"
                     android:layout_width="match_parent"
-                    android:layout_height="150dp"
+                    android:layout_height="200dp"
                     android:layout_marginEnd="8dp"
                     android:layout_marginLeft="8dp"
                     android:layout_marginRight="8dp"
                     android:layout_marginStart="8dp"
                     android:layout_marginTop="8dp"
-                    android:background="@drawable/selecione_foto"
+                    android:adjustViewBounds="false"
+                    android:background="@drawable/img_background1"
+                    android:cropToPadding="true"
                     android:scaleType="centerCrop"
+                    android:visibility="visible"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="1.0"
+                    app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/imageView1" />
+                    app:layout_constraintTop_toTopOf="parent" />
 
-                <!-- Titulo do Evento -->
                 <RelativeLayout
                     android:id="@+id/layout_TituloEvento"
                     android:layout_width="match_parent"
@@ -98,11 +56,11 @@
                     android:layout_marginLeft="8dp"
                     android:layout_marginRight="8dp"
                     android:layout_marginStart="8dp"
-                    android:layout_marginTop="8dp"
+                    android:layout_marginTop="16dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/img_FotoEvento">
+                    app:layout_constraintTop_toBottomOf="@+id/img_fotoAtualizarEvento">
 
                     <ImageView
                         android:id="@+id/imgView_userIcon"
@@ -113,7 +71,7 @@
                         android:src="@drawable/ic_assignment" />
 
                     <EditText
-                        android:id="@+id/edt_tituloEvento"
+                        android:id="@+id/edt_tituloAtualizarEvento"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_alignBottom="@+id/imgView_userIcon"
@@ -137,7 +95,7 @@
                     android:layout_marginLeft="8dp"
                     android:layout_marginRight="8dp"
                     android:layout_marginStart="8dp"
-                    android:layout_marginTop="16dp"
+                    android:layout_marginTop="8dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/layout_TituloEvento">
@@ -173,7 +131,7 @@
                         android:src="@drawable/ic_access_time" />
 
                     <EditText
-                        android:id="@+id/edt_horarioEvento"
+                        android:id="@+id/edt_horarioAtualizarEvento"
                         android:layout_width="80dp"
                         android:layout_height="wrap_content"
                         android:layout_alignBottom="@+id/imgView_timePickerAtualizar"
@@ -196,7 +154,7 @@
                     android:layout_marginLeft="8dp"
                     android:layout_marginRight="8dp"
                     android:layout_marginStart="8dp"
-                    android:layout_marginTop="16dp"
+                    android:layout_marginTop="8dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/layout_DataHorarioEvento">
@@ -211,7 +169,7 @@
                         android:tint="@color/white" />
 
                     <EditText
-                        android:id="@+id/edt_localEvento"
+                        android:id="@+id/edt_localAtualizarEvento"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_alignBottom="@+id/imgView_local"
@@ -241,7 +199,7 @@
                     app:layout_constraintTop_toBottomOf="@+id/layout_LocalEvento">
 
                     <EditText
-                        android:id="@+id/edt_descricaoEvento"
+                        android:id="@+id/edt_descricaoAtualizarEvento"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:hint="Descrição do Evento"
@@ -266,7 +224,7 @@
                     app:layout_constraintTop_toBottomOf="@+id/layout_DescricaoEvento">
 
                     <EditText
-                        android:id="@+id/edt_atividadeEvento"
+                        android:id="@+id/edt_atividadeAtualizarEvento"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:hint="Digite aqui as Atividades do Evento ..."
@@ -274,60 +232,79 @@
 
                 </RelativeLayout>
 
-                <Button
-                    android:id="@+id/btn_salvarEvento"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="64dp"
-                    android:layout_marginLeft="64dp"
-                    android:layout_marginRight="64dp"
-                    android:layout_marginStart="64dp"
-                    android:layout_marginTop="24dp"
-                    android:background="@drawable/btn_style"
-                    android:drawableRight="@drawable/ic_arrow_forward"
-                    android:fontFamily="sans-serif-smallcaps"
-                    android:text="Registrar Evento"
-                    android:textColor="@color/white"
-                    android:textSize="16sp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/layout_AtividadesEvento" />
-
+                <!-- Botões -->
                 <LinearLayout
-                    android:id="@+id/linearLayout"
-                    android:layout_width="match_parent"
-                    android:layout_height="2dp"
-                    android:layout_marginEnd="32dp"
-                    android:layout_marginLeft="32dp"
-                    android:layout_marginRight="32dp"
-                    android:layout_marginStart="32dp"
-                    android:layout_marginTop="8dp"
-                    android:background="@color/lightGrey"
-                    android:orientation="horizontal"
-                    android:visibility="visible"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/btn_salvarEvento" />
-
-                <Button
-                    android:id="@+id/btn_voltarMenuPrincipal"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="8dp"
-                    android:layout_marginEnd="64dp"
-                    android:layout_marginLeft="64dp"
-                    android:layout_marginRight="64dp"
-                    android:layout_marginStart="64dp"
-                    android:layout_marginTop="8dp"
-                    android:background="@drawable/border_button"
-                    android:fontFamily="sans-serif-smallcaps"
-                    android:text="Voltar ao Menu Principal"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-                    android:textColor="@color/colorAccent"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginRight="8dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="16dp"
+                    android:gravity="center"
+                    android:orientation="vertical"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
+                    app:layout_constraintTop_toBottomOf="@+id/layout_AtividadesEvento">
+
+                    <Button
+                        android:id="@+id/btn_salvarEvento"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="64dp"
+                        android:layout_marginLeft="64dp"
+                        android:layout_marginRight="64dp"
+                        android:layout_marginStart="64dp"
+                        android:layout_marginTop="16dp"
+                        android:background="@drawable/btn_style"
+                        android:drawableRight="@drawable/ic_arrow_forward"
+                        android:fontFamily="sans-serif-smallcaps"
+                        android:text="Salvar Evento"
+                        android:textColor="@color/white"
+                        android:textSize="16sp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/layout_AtividadesEvento" />
+
+                    <LinearLayout
+                        android:id="@+id/linearLayout"
+                        android:layout_width="match_parent"
+                        android:layout_height="2dp"
+                        android:layout_marginEnd="32dp"
+                        android:layout_marginLeft="32dp"
+                        android:layout_marginRight="32dp"
+                        android:layout_marginStart="32dp"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginBottom="8dp"
+                        android:background="@color/lightGrey"
+                        android:orientation="horizontal"
+                        android:visibility="visible"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/btn_salvarEvento" />
+
+                    <Button
+                        android:id="@+id/btn_voltarListaEventos"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="8dp"
+                        android:layout_marginEnd="64dp"
+                        android:layout_marginLeft="64dp"
+                        android:layout_marginRight="64dp"
+                        android:layout_marginStart="64dp"
+                        android:background="@drawable/border_button"
+                        android:fontFamily="sans-serif-smallcaps"
+                        android:text="Voltar a Lista de Eventos"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                        android:textColor="@color/colorAccent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
+
+                </LinearLayout>
 
             </android.support.constraint.ConstraintLayout>
 
