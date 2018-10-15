@@ -25,7 +25,13 @@ import com.example.android.icummenical.Helper.CommonActivity;
 import com.example.android.icummenical.R;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
@@ -47,6 +53,8 @@ public class CadastrarEventoActivity extends CommonActivity implements DatePicke
 
     private DatabaseReference databaseReference;
     private StorageReference storageReference;
+    private FirebaseAuth mAuth;
+    private FirebaseUser usuarioAtual;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +63,8 @@ public class CadastrarEventoActivity extends CommonActivity implements DatePicke
 
         databaseReference = ConfigFirebase.getDatabaseReference();
         storageReference = ConfigFirebase.getStorageReference();
+        mAuth = ConfigFirebase.getFirebaseAuth();
+        usuarioAtual = mAuth.getCurrentUser();
 
         imgFotoEvento = findViewById(R.id.img_FotoEvento);
         imgDatePicker = findViewById(R.id.imgView_datePickerAtualizar);
@@ -225,10 +235,12 @@ public class CadastrarEventoActivity extends CommonActivity implements DatePicke
         evento.setLocal(edtLocal.getText().toString());
         evento.setDescricao(edtDescricao.getText().toString());
         evento.setAtividades(edtAtividades.getText().toString());
+        evento.setUid(usuarioAtual.getUid());
 
         salvarFoto();
         insertEvento(evento);
         abrirMenuPrincipal();
+
     }
 
     private boolean insertEvento(Evento evento) {

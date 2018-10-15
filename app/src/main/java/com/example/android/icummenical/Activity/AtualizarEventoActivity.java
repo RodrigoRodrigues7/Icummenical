@@ -15,8 +15,10 @@ import android.widget.TimePicker;
 
 import com.example.android.icummenical.Classes.DatePickerFragment;
 import com.example.android.icummenical.Classes.TimePickerFragment;
+import com.example.android.icummenical.DAO.ConfigFirebase;
 import com.example.android.icummenical.Helper.CommonActivity;
 import com.example.android.icummenical.R;
+import com.google.firebase.database.DatabaseReference;
 
 import java.text.DateFormat;
 import java.util.Calendar;
@@ -25,13 +27,18 @@ public class AtualizarEventoActivity extends CommonActivity implements DatePicke
 
     private static final int GALLERY_CODE = 2111;
     private ImageView imgFotoEvento, imgDatePicker, imgTimePicker;
+
     private EditText edtTitulo, edtData, edtHorario, edtLocal, edtDescricao, edtAtividades;
     private Button btnSalvarEvento, btnVoltarLista;
+
+    private DatabaseReference databaseReference;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_atualizar_evento);
+
+        databaseReference = ConfigFirebase.getDatabaseReference();
 
         imgFotoEvento = findViewById(R.id.img_fotoAtualizarEvento);
         imgDatePicker = findViewById(R.id.imgView_datePickerAtualizar);
@@ -52,7 +59,7 @@ public class AtualizarEventoActivity extends CommonActivity implements DatePicke
         btnSalvarEvento.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showToast("Evento Salvo!");
+                atualizarEvento();
             }
         });
 
@@ -115,6 +122,12 @@ public class AtualizarEventoActivity extends CommonActivity implements DatePicke
     }
 
 //--------------------------------------------------------------------------------------------------
+
+    private void atualizarEvento() {
+
+//        databaseReference.child("Eventos");
+
+    }
 
     private void selecionarFotoEvento() {
         Intent abrirGaleria = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI);

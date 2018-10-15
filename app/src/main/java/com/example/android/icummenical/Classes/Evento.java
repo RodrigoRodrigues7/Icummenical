@@ -2,33 +2,29 @@ package com.example.android.icummenical.Classes;
 
 public class Evento {
 
-    private String keyEvento;
     private String titulo;
     private String data;
     private String horario;
     private String local;
     private String descricao;
     private String atividades;
+    private String keyEvento;
+    private String uid;
+    private String nomeModerador;
 
     public Evento() {
     }
 
-    public Evento(String keyEvento, String titulo, String data, String horario, String local, String descricao, String atividades) {
-        this.keyEvento = keyEvento;
+    public Evento(String titulo, String data, String horario, String local, String descricao, String atividades, String keyEvento, String uid, String nomeModerador) {
         this.titulo = titulo;
         this.data = data;
         this.horario = horario;
         this.local = local;
         this.descricao = descricao;
         this.atividades = atividades;
-    }
-
-    public String getKeyEvento() {
-        return keyEvento;
-    }
-
-    public void setKeyEvento(String keyEvento) {
         this.keyEvento = keyEvento;
+        this.uid = uid;
+        this.nomeModerador = nomeModerador;
     }
 
     public String getTitulo() {
@@ -77,6 +73,30 @@ public class Evento {
 
     public void setAtividades(String atividades) {
         this.atividades = atividades;
+    }
+
+    public String getKeyEvento() {
+        return keyEvento;
+    }
+
+    public void setKeyEvento(String keyEvento) {
+        this.keyEvento = keyEvento;
+    }
+
+    public String getUid() {
+        return uid;
+    }
+
+    public void setUid(String uid) {
+        this.uid = uid;
+    }
+
+    public String getNomeModerador() {
+        return nomeModerador;
+    }
+
+    public void setNomeModerador(String nomeModerador) {
+        this.nomeModerador = nomeModerador;
     }
 
 }

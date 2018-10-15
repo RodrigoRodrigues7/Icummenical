@@ -40,7 +40,6 @@ public class PerfilUsuarioActivity extends CommonActivity {
     private static final int GALLERY_CODE = 2333;
     private String emailUsuarioLogado;
 
-
     private ImageView imgFotoUsuario;
     private Button btnEditarPerfil, btnExcluirConta, btnVoltarMenu;
     private TextView txtNomeUsuario, txtEmailUsuario;
@@ -87,14 +86,6 @@ public class PerfilUsuarioActivity extends CommonActivity {
         btnEditarPerfil = findViewById(R.id.btn_editarPerfilusuario);
         btnExcluirConta = findViewById(R.id.btn_excluirConta);
         btnVoltarMenu = findViewById(R.id.btn_voltarMenuPrincipal);
-
-//        imgFotoUsuario.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Intent abrirGaleria = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI);
-//                startActivityForResult(Intent.createChooser(abrirGaleria, "Selecione uma Imagen: "), GALLERY_CODE);
-//            }
-//        });
 
         btnEditarPerfil.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -197,6 +188,7 @@ public class PerfilUsuarioActivity extends CommonActivity {
 
             }
         });
+        
     }
 
 //--------------------------------------------------------------------------------------------------
