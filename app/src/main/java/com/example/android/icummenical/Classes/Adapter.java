@@ -124,6 +124,7 @@ public class Adapter extends RecyclerView.Adapter<Adapter.myViewHolder> {
                             bundle.putString("dataEvento", itemEvento.getData());
                             bundle.putString("descricaoEvento", itemEvento.getDescricao());
                             bundle.putString("atividadesEvento", itemEvento.getAtividades());
+                            bundle.putString("keyEvento", itemEvento.getKeyEvento());
 
                             detalheEvento.putExtras(bundle);
                             context.startActivity(detalheEvento);

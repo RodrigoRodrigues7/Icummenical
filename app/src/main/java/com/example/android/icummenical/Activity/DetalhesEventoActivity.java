@@ -1,31 +1,37 @@
 package com.example.android.icummenical.Activity;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.android.icummenical.Classes.Evento;
 import com.example.android.icummenical.DAO.ConfigFirebase;
 import com.example.android.icummenical.Helper.CommonActivity;
 import com.example.android.icummenical.R;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.squareup.picasso.Picasso;
 
 public class DetalhesEventoActivity extends CommonActivity {
 
     private TextView tituloEvento, localEvento, dataEvento;
     private TextView horarioEvento, descricaoEvento, atividadesEvento;
     private Button btnVoltarMenu, btnAtualizarEvento, btnExcluirEvento;
+    private ImageView imgFotoEvento;
 
-    private String origem, titulo, local, data, horario, descricao, atividades;
+    private String origem, titulo, local, data, horario, descricao, atividades, keyEvento;
 
     private DatabaseReference databaseReference;
 
@@ -38,6 +44,7 @@ public class DetalhesEventoActivity extends CommonActivity {
         btnAtualizarEvento = findViewById(R.id.btn_atualizarEvento);
         btnVoltarMenu = findViewById(R.id.btn_voltarMenuPrincipal);
         btnExcluirEvento = findViewById(R.id.btn_excluirEvento);
+        imgFotoEvento = findViewById(R.id.imgDetalheEvento);
 
         tituloEvento = findViewById(R.id.txt_detalheTituloEvento);
         localEvento = findViewById(R.id.txt_detalheLocalEvento);
@@ -47,6 +54,7 @@ public class DetalhesEventoActivity extends CommonActivity {
         atividadesEvento = findViewById(R.id.txt_detalheAtividadesEvento);
 
         carregarDadosEvento();
+        carregarFotoEvento();
 
         btnAtualizarEvento.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -71,12 +79,48 @@ public class DetalhesEventoActivity extends CommonActivity {
 
     }
 
+    protected void carregarFotoEvento() {
+
+        FirebaseStorage storage = FirebaseStorage.getInstance();
+        final StorageReference storageReference = storage.getReferenceFromUrl("gs://icummenical.appspot.com/fotoEvento-" + titulo + "/" + titulo + ".jpg");
+
+        databaseReference = ConfigFirebase.getDatabaseReference();
+        databaseReference.child("Eventos").orderByChild("keyEvento").equalTo(keyEvento).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+                    final int height = 300;
+                    final int width = 300;
+                    storageReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                        @Override
+                        public void onSuccess(Uri uri) {
+                            Picasso.with(DetalhesEventoActivity.this).load(uri.toString()).resize(width, height).centerCrop().into(imgFotoEvento);
+
+                        }
+                    }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Log.d("ERROR_LOAD_PHOTO", "------------------------> Erro ao Carregar Foto <------------------------");
+
+                        }
+                    });
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+    }
+
 //--------------------------------------------------------------------------------------------------
 
     private void excluirEvento() {
 
         databaseReference = ConfigFirebase.getDatabaseReference();
-        Query excluirQuery = databaseReference.child("Eventos").orderByChild("titulo").equalTo(titulo);
+        Query excluirQuery = databaseReference.child("Eventos").orderByChild("keyEvento").equalTo(keyEvento);
 
         excluirQuery.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -87,7 +131,6 @@ public class DetalhesEventoActivity extends CommonActivity {
                     voltarMenuPrincipal();
                 }
             }
-
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
 
@@ -107,6 +150,7 @@ public class DetalhesEventoActivity extends CommonActivity {
         bundle.putString("localEvento", localEvento.getText().toString());
         bundle.putString("descricaoEvento", descricaoEvento.getText().toString());
         bundle.putString("atividadesEvento", atividadesEvento.getText().toString());
+        bundle.putString("keyEvento", keyEvento);
 
         atualizarEvento.putExtras(bundle);
         startActivity(atualizarEvento);
@@ -126,6 +170,7 @@ public class DetalhesEventoActivity extends CommonActivity {
             horario = bundle.getString("horarioEvento");
             descricao = bundle.getString("descricaoEvento");
             atividades = bundle.getString("atividadesEvento");
+            keyEvento = bundle.getString("keyEvento");
 
             tituloEvento.setText(titulo);
             localEvento.setText(local);

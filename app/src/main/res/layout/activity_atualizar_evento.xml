@@ -28,7 +28,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-                <!-- Titulo do Evento -->
                 <ImageView
                     android:id="@+id/img_fotoAtualizarEvento"
                     android:layout_width="match_parent"
@@ -39,7 +38,6 @@
                     android:layout_marginStart="8dp"
                     android:layout_marginTop="8dp"
                     android:adjustViewBounds="false"
-                    android:background="@drawable/img_background1"
                     android:cropToPadding="true"
                     android:scaleType="centerCrop"
                     android:visibility="visible"
@@ -48,6 +46,7 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
+                <!-- Titulo do Evento -->
                 <RelativeLayout
                     android:id="@+id/layout_TituloEvento"
                     android:layout_width="match_parent"
@@ -272,12 +271,12 @@
                         android:id="@+id/linearLayout"
                         android:layout_width="match_parent"
                         android:layout_height="2dp"
+                        android:layout_marginBottom="8dp"
                         android:layout_marginEnd="32dp"
                         android:layout_marginLeft="32dp"
                         android:layout_marginRight="32dp"
                         android:layout_marginStart="32dp"
                         android:layout_marginTop="8dp"
-                        android:layout_marginBottom="8dp"
                         android:background="@color/lightGrey"
                         android:orientation="horizontal"
                         android:visibility="visible"

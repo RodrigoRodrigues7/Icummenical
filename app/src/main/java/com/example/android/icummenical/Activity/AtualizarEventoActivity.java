@@ -3,9 +3,13 @@ package com.example.android.icummenical.Activity;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
+import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -14,11 +18,21 @@ import android.widget.ImageView;
 import android.widget.TimePicker;
 
 import com.example.android.icummenical.Classes.DatePickerFragment;
+import com.example.android.icummenical.Classes.Evento;
 import com.example.android.icummenical.Classes.TimePickerFragment;
 import com.example.android.icummenical.DAO.ConfigFirebase;
 import com.example.android.icummenical.Helper.CommonActivity;
 import com.example.android.icummenical.R;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.squareup.picasso.Picasso;
 
 import java.text.DateFormat;
 import java.util.Calendar;
@@ -30,6 +44,7 @@ public class AtualizarEventoActivity extends CommonActivity implements DatePicke
 
     private EditText edtTitulo, edtData, edtHorario, edtLocal, edtDescricao, edtAtividades;
     private Button btnSalvarEvento, btnVoltarLista;
+    private String titulo, keyEvento;
 
     private DatabaseReference databaseReference;
 
@@ -55,6 +70,7 @@ public class AtualizarEventoActivity extends CommonActivity implements DatePicke
         edtAtividades = findViewById(R.id.edt_atividadeAtualizarEvento);
 
         carregarDadosEvento();
+        carregarFotoOriginalEvento();
 
         btnSalvarEvento.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -121,12 +137,89 @@ public class AtualizarEventoActivity extends CommonActivity implements DatePicke
         dialog.show(getSupportFragmentManager(), "TimePicker");
     }
 
+    protected void carregarFotoOriginalEvento() {
+
+        FirebaseStorage storage = FirebaseStorage.getInstance();
+        final StorageReference storageReference = storage.getReferenceFromUrl("gs://icummenical.appspot.com/fotoEvento-" + titulo + "/" + titulo + ".jpg");
+
+        databaseReference = ConfigFirebase.getDatabaseReference();
+        databaseReference.child("Eventos").orderByChild("keyEvento").equalTo(keyEvento).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+
+                    final int height = 300;
+                    final int width = 300;
+
+                    storageReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                        @Override
+                        public void onSuccess(Uri uri) {
+                            Picasso.with(AtualizarEventoActivity.this).load(uri.toString()).resize(width, height).centerCrop().into(imgFotoEvento);
+
+                        }
+                    }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Log.d("ERROR_LOAD_PHOTO", "------------------------> Erro ao Carregar Foto <------------------------");
+
+                        }
+                    });
+
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+    }
+
 //--------------------------------------------------------------------------------------------------
 
     private void atualizarEvento() {
 
-//        databaseReference.child("Eventos");
+        final String titulo = edtTitulo.getText().toString().trim();
+        final String data = edtData.getText().toString().trim();
+        final String horario = edtHorario.getText().toString().trim();
+        final String local = edtLocal.getText().toString().trim();
+        final String descricao = edtDescricao.getText().toString().trim();
+        final String atividades = edtAtividades.getText().toString().trim();
 
+        if (TextUtils.isEmpty(titulo)) {
+            edtTitulo.setError("Informe o Titulo");
+        }
+        if (TextUtils.isEmpty(data)) {
+            edtData.setError("Informe a Data");
+        }
+        if (TextUtils.isEmpty(horario)) {
+            edtData.setError("Informe o Horario");
+        }
+        if (TextUtils.isEmpty(local)) {
+            edtData.setError("Informe o Local");
+        }
+        if (TextUtils.isEmpty(descricao)) {
+            edtData.setError("Informe a Descrição");
+        }
+        if (TextUtils.isEmpty(atividades)) {
+            edtData.setError("Informe as Atividades");
+        } else {
+
+            updateEvento(titulo, data, horario, local, descricao, atividades, keyEvento);
+            showToast("Evento Atualizado!");
+
+        }
+
+    }
+
+    private boolean updateEvento(String titulo, String data, String horario, String local, String descricao, String atividades, String key_Evento) {
+
+        DatabaseReference dR = FirebaseDatabase.getInstance().getReference("Eventos").child(key_Evento);
+
+        Evento evento = new Evento(titulo, data, horario, local, descricao, atividades, key_Evento);
+        dR.setValue(evento);
+        return true;
     }
 
     private void selecionarFotoEvento() {
@@ -142,7 +235,7 @@ public class AtualizarEventoActivity extends CommonActivity implements DatePicke
 
     private void carregarDadosEvento() {
 
-        String origem, titulo, local, data, horario, descricao, atividades;
+        String origem, local, data, horario, descricao, atividades;
 
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
@@ -155,6 +248,7 @@ public class AtualizarEventoActivity extends CommonActivity implements DatePicke
             horario = bundle.getString("horarioEvento");
             descricao = bundle.getString("descricaoEvento");
             atividades = bundle.getString("atividadesEvento");
+            keyEvento = bundle.getString("keyEvento");
 
             edtTitulo.setText(titulo);
             edtData.setText(data);
