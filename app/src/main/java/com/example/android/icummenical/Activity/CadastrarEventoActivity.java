@@ -1,10 +1,10 @@
 package com.example.android.icummenical.Activity;
 
-import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
@@ -27,17 +27,14 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
 
 import java.io.ByteArrayOutputStream;
+import java.io.FileNotFoundException;
 import java.text.DateFormat;
 import java.util.Calendar;
 
@@ -132,15 +129,30 @@ public class CadastrarEventoActivity extends CommonActivity implements DatePicke
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
-        final int width = 300;
-        final int height = 300;
+        if (resultCode == RESULT_OK) {
 
-        if (resultCode == Activity.RESULT_OK) {
-            if (requestCode == GALLERY_CODE) {
-                Uri imagemSelecionada = data.getData();
-                Picasso.with(CadastrarEventoActivity.this).load(imagemSelecionada.toString()).resize(width, height).centerCrop().into(imgFotoEvento);
+            Uri uriTarget = data.getData();
+            Bitmap bitmap;
+
+            try {
+
+                bitmap = BitmapFactory.decodeStream(getContentResolver().openInputStream(uriTarget));
+                imgFotoEvento.setImageBitmap(bitmap);
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
             }
+
         }
+
+//        final int width = 300;
+//        final int height = 300;
+//
+//        if (resultCode == Activity.RESULT_OK) {
+//            if (requestCode == GALLERY_CODE) {
+//                Uri imagemSelecionada = data.getData();
+//                Picasso.with(CadastrarEventoActivity.this).load(imagemSelecionada.toString()).resize(width, height).centerCrop().into(imgFotoEvento);
+//            }
+//        }
 
     }
 
@@ -171,8 +183,8 @@ public class CadastrarEventoActivity extends CommonActivity implements DatePicke
     }
 
     private void selecionarFotoEvento() {
-        Intent abrirGaleria = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI);
-        startActivityForResult(Intent.createChooser(abrirGaleria, "Selecione uma Imagen: "), GALLERY_CODE);
+        Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        startActivityForResult(intent, GALLERY_CODE);
     }
 
     private void carregarFotoEvento() {

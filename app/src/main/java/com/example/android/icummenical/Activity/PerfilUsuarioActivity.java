@@ -1,12 +1,11 @@
 package com.example.android.icummenical.Activity;
 
-import android.app.Activity;
 import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.util.Log;
 import android.view.View;
@@ -30,14 +29,12 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
-import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
 
-import java.io.ByteArrayOutputStream;
+import java.io.FileNotFoundException;
 
 public class PerfilUsuarioActivity extends CommonActivity {
 
-    private static final int GALLERY_CODE = 2333;
     private String emailUsuarioLogado;
 
     private ImageView imgFotoUsuario;
@@ -77,7 +74,7 @@ public class PerfilUsuarioActivity extends CommonActivity {
             }
         });
 
-        carregarFotoPadrao();
+        carregarFotoUsuario();
 
         imgFotoUsuario = findViewById(R.id.img_fotoPerfilUsuario);
         txtNomeUsuario = findViewById(R.id.txt_perfilNomeUsuario);
@@ -112,22 +109,25 @@ public class PerfilUsuarioActivity extends CommonActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (resultCode == RESULT_OK) {
 
-        final int width = 300;
-        final int height = 300;
+            Uri uriTarget = data.getData();
+            Bitmap bitmap;
 
-        if (resultCode == Activity.RESULT_OK) {
-            if (requestCode == GALLERY_CODE) {
-                Uri imagemSelecionada = data.getData();
-                Picasso.with(PerfilUsuarioActivity.this).load(imagemSelecionada.toString()).resize(width, height).centerCrop().into(imgFotoUsuario);
+            try {
+
+                bitmap = BitmapFactory.decodeStream(getContentResolver().openInputStream(uriTarget));
+                imgFotoUsuario.setImageBitmap(bitmap);
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
             }
-        }
 
+        }
     }
 
 //--------------------------------------------------------------------------------------------------
 
-    private void carregarFotoPadrao() {
+    private void carregarFotoUsuario() {
 
         FirebaseStorage storage = FirebaseStorage.getInstance();
         final StorageReference storageReference = storage.getReferenceFromUrl("gs://icummenical.appspot.com/fotoPerfilUsuario-" + emailUsuarioLogado + "/" + emailUsuarioLogado + ".jpg");
@@ -188,7 +188,7 @@ public class PerfilUsuarioActivity extends CommonActivity {
 
             }
         });
-        
+
     }
 
 //--------------------------------------------------------------------------------------------------
