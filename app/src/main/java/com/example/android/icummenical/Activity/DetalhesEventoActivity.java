@@ -1,9 +1,11 @@
 package com.example.android.icummenical.Activity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -40,7 +42,6 @@ public class DetalhesEventoActivity extends CommonActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_evento_detalhes);
 
-
         btnAtualizarEvento = findViewById(R.id.btn_atualizarEvento);
         btnVoltarMenu = findViewById(R.id.btn_voltarMenuPrincipal);
         btnExcluirEvento = findViewById(R.id.btn_excluirEvento);
@@ -66,7 +67,7 @@ public class DetalhesEventoActivity extends CommonActivity {
         btnExcluirEvento.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                excluirEvento();
+                abrirAlertDialog();
             }
         });
 
@@ -117,6 +118,31 @@ public class DetalhesEventoActivity extends CommonActivity {
 
 //--------------------------------------------------------------------------------------------------
 
+    private void abrirAlertDialog() {
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(DetalhesEventoActivity.this);
+
+        builder.setMessage("Você quer Mesmo Excluir esse Evento?").setCancelable(false)
+                .setPositiveButton("Sim, Excluir", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        excluirEvento();
+                        excluirFotoEvento();
+                    }
+                })
+                .setNegativeButton("Não", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+
+        AlertDialog dialog = builder.create();
+        dialog.setTitle("Excluir Evento:");
+        dialog.show();
+
+    }
+
     private void excluirEvento() {
 
         databaseReference = ConfigFirebase.getDatabaseReference();
@@ -126,14 +152,31 @@ public class DetalhesEventoActivity extends CommonActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+
                     postSnapshot.getRef().removeValue();
                     showToast("Evento Removido com Sucesso!");
                     voltarMenuPrincipal();
+
                 }
             }
+
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
 
+            }
+        });
+
+    }
+
+    private void excluirFotoEvento() {
+
+        StorageReference storageReference = FirebaseStorage.getInstance().getReferenceFromUrl("gs://icummenical.appspot.com");
+        StorageReference photoReference = storageReference.child("fotoEvento-" + tituloEvento.getText().toString() + "/" + tituloEvento.getText().toString() + ".jpg");
+
+        photoReference.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void aVoid) {
+                showToast("Foto do Evento Removida!");
             }
         });
 

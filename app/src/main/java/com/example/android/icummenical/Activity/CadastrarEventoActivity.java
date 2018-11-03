@@ -144,16 +144,6 @@ public class CadastrarEventoActivity extends CommonActivity implements DatePicke
 
         }
 
-//        final int width = 300;
-//        final int height = 300;
-//
-//        if (resultCode == Activity.RESULT_OK) {
-//            if (requestCode == GALLERY_CODE) {
-//                Uri imagemSelecionada = data.getData();
-//                Picasso.with(CadastrarEventoActivity.this).load(imagemSelecionada.toString()).resize(width, height).centerCrop().into(imgFotoEvento);
-//            }
-//        }
-
     }
 
 //--------------------------------------------------------------------------------------------------
