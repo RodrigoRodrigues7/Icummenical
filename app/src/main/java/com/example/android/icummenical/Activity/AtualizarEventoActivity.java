@@ -131,6 +131,16 @@ public class AtualizarEventoActivity extends CommonActivity implements DatePicke
         }
     }
 
+    @Override
+    public void onBackPressed() {
+
+        Intent intent = new Intent(getApplicationContext(), PrincipalActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        intent.putExtra("EXIT", true);
+        startActivity(intent);
+
+    }
+
     //--------------------------------------------------------------------------------------------------
 
     @Override
@@ -231,8 +241,7 @@ public class AtualizarEventoActivity extends CommonActivity implements DatePicke
         } else {
 
             updateEvento(titulo, data, horario, local, descricao, atividades, keyEvento);
-            showToast("Evento Atualizado!");
-            voltarMenuPrincipal();
+            showToast("Evento Atualizado! Clique no Botão de Retorno.");
 
         }
 
@@ -244,7 +253,10 @@ public class AtualizarEventoActivity extends CommonActivity implements DatePicke
 
         Evento evento = new Evento(titulo, data, horario, local, descricao, atividades, key_Evento);
         dR.setValue(evento);
-        salvarFoto();
+
+        removerFotoAntiga();
+        salvarNovaFoto();
+
         return true;
     }
 
@@ -253,9 +265,10 @@ public class AtualizarEventoActivity extends CommonActivity implements DatePicke
         startActivityForResult(intent, GALLERY_CODE);
     }
 
-    private void salvarFoto() {
+    private void salvarNovaFoto() {
 
-        StorageReference imageReference = storageReference.child("fotoEvento-" + titulo + "/" + titulo + ".jpg");
+        String novoTitulo = edtTitulo.getText().toString();
+        StorageReference imageReference = storageReference.child("fotoEvento-" + novoTitulo + "/" + novoTitulo + ".jpg");
 
         imgFotoEvento.setDrawingCacheEnabled(true);
         imgFotoEvento.buildDrawingCache();
@@ -272,14 +285,27 @@ public class AtualizarEventoActivity extends CommonActivity implements DatePicke
             @Override
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                 Uri downloadUrl = taskSnapshot.getUploadSessionUri();
-//                carregarFotoEvento();
+            }
+        });
+
+    }
+
+    private void removerFotoAntiga() {
+
+        StorageReference storageReference = FirebaseStorage.getInstance().getReferenceFromUrl("gs://icummenical.appspot.com");
+        StorageReference photoReference = storageReference.child("fotoEvento-" + titulo + "/" + titulo + ".jpg");
+
+        photoReference.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void aVoid) {
+                Log.d("FOTO_ATUALIZADA", "Pasta Antiga Removida!");
             }
         });
 
     }
 
     private void voltarMenuPrincipal() {
-        Intent voltarMenu = new Intent(AtualizarEventoActivity.this, PrincipalActivity.class);
+        Intent voltarMenu = new Intent(getApplicationContext(), PrincipalActivity.class);
         startActivity(voltarMenu);
         finish();
     }

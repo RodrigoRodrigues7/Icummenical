@@ -200,6 +200,8 @@ public class DetalhesEventoActivity extends CommonActivity {
         finish();
     }
 
+//--------------------------------------------------------------------------------------------------
+
     private void carregarDadosEvento() {
 
         Intent intent = getIntent();
