@@ -71,7 +71,7 @@ public class EventoActivity extends CommonActivity {
 
         } catch (Exception e) {
             Log.d("ERRO_LISTA_EVENTOS", "-------------------------> Erro ao Exibir Lista <-------------------------");
-            showToast("Erro: " + e.getMessage());
+            showToastShort("Erro: " + e.getMessage());
         }
 
     }

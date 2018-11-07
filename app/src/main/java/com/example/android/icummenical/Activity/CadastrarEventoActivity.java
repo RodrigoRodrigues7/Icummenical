@@ -107,12 +107,12 @@ public class CadastrarEventoActivity extends CommonActivity implements DatePicke
             public void onClick(View v) {
                 try {
                     if (verificarCampos() == false) {
-                        showToast("Preencha Todos os Campos!");
+                        showToastShort("Preencha Todos os Campos!");
                     } else {
                         registrarEvento();
                     }
                 } catch (Exception error) {
-                    showToast("Erro: " + error.getMessage());
+                    showToastShort("Erro: " + error.getMessage());
                 }
             }
         });
@@ -194,7 +194,7 @@ public class CadastrarEventoActivity extends CommonActivity implements DatePicke
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
-                showToast("Imagem Não Encontrada");
+                showToastShort("Imagem Não Encontrada");
             }
         });
 
@@ -254,11 +254,11 @@ public class CadastrarEventoActivity extends CommonActivity implements DatePicke
 
             databaseReference.child(key).setValue(evento);
 //            databaseReference.push().setValue(evento);
-            showToast("Evento Registrado com Sucesso!");
+            showToastShort("Evento Registrado com Sucesso!");
             return true;
 
         } catch (Exception e) {
-            showToast("Errro ao Registrar o Evento!");
+            showToastShort("Errro ao Registrar o Evento!");
             e.printStackTrace();
             return false;
 
@@ -269,19 +269,19 @@ public class CadastrarEventoActivity extends CommonActivity implements DatePicke
     private boolean verificarCampos() {
 
         if (edtTitulo.getText().toString().trim().equals("")) {
-            showToast("Preencha o Campo do Título!");
+            showToastShort("Preencha o Campo do Título!");
             return false;
         } else if (edtData.getText().toString().trim().equals("") || edtHorario.getText().toString().trim().equals("")) {
-            showToast("Preencha os Campos de Data e Horario!");
+            showToastShort("Preencha os Campos de Data e Horario!");
             return false;
         } else if (edtLocal.getText().toString().trim().equals("")) {
-            showToast("Preencha o Campo do Local!");
+            showToastShort("Preencha o Campo do Local!");
             return false;
         } else if (edtDescricao.getText().toString().trim().equals("")) {
-            showToast("Preencha o Campo da Descrição!");
+            showToastShort("Preencha o Campo da Descrição!");
             return false;
         } else if (edtAtividades.getText().toString().trim().equals("")) {
-            showToast("Preencha o Campo das Atividades!");
+            showToastShort("Preencha o Campo das Atividades!");
             return false;
         }
 

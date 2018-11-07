@@ -76,7 +76,7 @@ public class LoginActivity extends CommonActivity {
 
                     @Override
                     public void onError(FacebookException exception) {
-                        showToast(exception.getMessage());
+                        showToastShort(exception.getMessage());
                     }
                 });
 
@@ -155,7 +155,7 @@ public class LoginActivity extends CommonActivity {
 //------------------------------------------------------------------------------------------------------------
 
     public void updateUI() {
-        showToast("Você Entrou no Icummenical");
+        showToastShort("Você Entrou no Icummenical");
         abrirTelaPrincipal();
     }
 
@@ -188,9 +188,7 @@ public class LoginActivity extends CommonActivity {
                 });
     }
 
-
 //------------------------------------------------------------------------------------------------------------
-
 
     //Método para autenticar o login do usuário
     private void validarLogin() {

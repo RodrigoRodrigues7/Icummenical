@@ -1,6 +1,5 @@
 package com.example.android.icummenical.Activity;
 
-import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -90,14 +89,12 @@ public class PerfilUsuarioActivity extends CommonActivity {
                 abrirTelaEditarPerfil();
             }
         });
-
         btnExcluirConta.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 excluirContaDeslogar();
             }
         });
-
         btnVoltarMenu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -144,7 +141,7 @@ public class PerfilUsuarioActivity extends CommonActivity {
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
-                showToast("Imagem Não Encontrada");
+                showToastShort("Imagem Não Encontrada");
             }
         });
 
@@ -169,12 +166,12 @@ public class PerfilUsuarioActivity extends CommonActivity {
                         public void onComplete(@NonNull Task<Void> task) {
                             if (task.isSuccessful()) {
                                 Log.d("USUARIO_EXCLUIDO", "-----------------> Conta de Usuário Excluída <-----------------");
-                                showToast("Conta Removida Com Sucesso!!!");
 
                                 databaseReference = ConfigFirebase.getDatabaseReference();
                                 databaseReference.child("usuarios").child(usuario.getKeyUsuario()).removeValue();
-
                                 mAuth.signOut();
+
+                                showToastShort("Conta Removida Com Sucesso!!!");
                                 abrirTelaLogin();
                             }
                         }
@@ -235,40 +232,6 @@ public class PerfilUsuarioActivity extends CommonActivity {
         Intent abrirTelaLogin = new Intent(PerfilUsuarioActivity.this, LoginActivity.class);
         startActivity(abrirTelaLogin);
         finish();
-    }
-
-    private void abrirAlertdialogConfirmarExclusao() {
-        final Dialog dialog = new Dialog(this);
-
-        dialog.setContentView(R.layout.alert_excluir_personalizado);
-
-        final Button btnConfirmar = dialog.findViewById(R.id.btn_confirmarExclusao);
-        final Button btnCancelar = dialog.findViewById(R.id.btn_cancelarExclusao);
-        final ImageView imgClose = dialog.findViewById(R.id.img_closeAlertDialog);
-
-        btnConfirmar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                excluirContaDeslogar();
-//                dialog.dismiss();
-            }
-        });
-
-        btnCancelar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog.dismiss();
-            }
-        });
-
-        imgClose.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog.dismiss();
-            }
-        });
-
-        dialog.show();
     }
 
 }

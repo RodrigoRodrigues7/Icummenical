@@ -152,7 +152,7 @@ public class PrincipalActivity extends CommonActivity implements NavigationView.
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
-                showToast("Imagem Não Encontrada");
+                showToastShort("Imagem Não Encontrada");
             }
         });
 
@@ -251,7 +251,7 @@ public class PrincipalActivity extends CommonActivity implements NavigationView.
 //        }).addOnFailureListener(new OnFailureListener() {
 //            @Override
 //            public void onFailure(@NonNull Exception e) {
-//                showToast("Imagem Não Encontrada");
+//                showToastShort("Imagem Não Encontrada");
 //            }
 //        });
 //

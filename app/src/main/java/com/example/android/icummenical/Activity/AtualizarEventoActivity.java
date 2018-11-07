@@ -241,7 +241,7 @@ public class AtualizarEventoActivity extends CommonActivity implements DatePicke
         } else {
 
             updateEvento(titulo, data, horario, local, descricao, atividades, keyEvento);
-            showToast("Evento Atualizado! Clique no Botão de Retorno.");
+            showToastShort("Evento Atualizado! Clique no Botão de Retorno.");
 
         }
 

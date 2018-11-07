@@ -4,7 +4,6 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -25,8 +24,6 @@ import com.google.firebase.auth.FirebaseAuthWeakPasswordException;
 
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageReference;
 
 public class CriarContaUsuarioActivity extends CommonActivity {
 
@@ -35,9 +32,8 @@ public class CriarContaUsuarioActivity extends CommonActivity {
     private ProgressDialog mProgress;
 
     private Usuario usuario;
-    private FirebaseAuth mAuth;
 
-    private StorageReference mStorageRef;
+    private FirebaseAuth mAuth;
     private DatabaseReference mReference;
 
     @Override
@@ -47,7 +43,6 @@ public class CriarContaUsuarioActivity extends CommonActivity {
 
         mAuth = FirebaseAuth.getInstance();
         mReference = FirebaseDatabase.getInstance().getReference();
-        mStorageRef = FirebaseStorage.getInstance().getReference();
 
         edtNomeUsuario = findViewById(R.id.edt_usernameCadastro);
         edtEmail = findViewById(R.id.edt_emailCadastro);
@@ -79,7 +74,7 @@ public class CriarContaUsuarioActivity extends CommonActivity {
                     registrarNovaConta();
 
                 } else {
-                    showToast("Por Favor, Verifique se a 'Senha' está Correta, e Escolha uma Imagem de Perfil.");
+                    showToastShort("Por Favor, Verifique se a 'Senha' está Correta.");
                     edtSenha.requestFocus();
                     edtSenha.setText("");
                     edtSenhaConfirm.setText("");
@@ -114,9 +109,11 @@ public class CriarContaUsuarioActivity extends CommonActivity {
 
                 if (task.isSuccessful()) {
 
+                    enviarVerificacaoEmail();
                     inserirNovoUsuario();
                     mAuth.signOut();
-                    abrirTelaPrincipal();
+
+                    voltarTelaLogin();
                     finish();
 
                 } else {
@@ -126,16 +123,20 @@ public class CriarContaUsuarioActivity extends CommonActivity {
                         throw task.getException();
                     } catch (FirebaseAuthWeakPasswordException e) {
                         error = "Senha Muito Fraca! ela Deve ter no Mínimo 8 Caracteres e Conter Letras e Números.";
+                        mProgress.dismiss();
                     } catch (FirebaseAuthInvalidCredentialsException e) {
                         error = "Email Inválido! Tente Novamente.";
+                        mProgress.dismiss();
                     } catch (FirebaseAuthUserCollisionException e) {
                         error = "Já Existe uma Conta com Esse Email, Tente Novamente.";
+                        mProgress.dismiss();
                     } catch (Exception e) {
                         error = "Houve um Erro ao Criar sua Nova Conta, Tente Mais Tarde.";
+                        mProgress.dismiss();
                         e.printStackTrace();
                     }
 
-                    showToast("Erro: " + error);
+                    showToastLong("Erro: " + error);
                 }
 
             }
@@ -153,15 +154,29 @@ public class CriarContaUsuarioActivity extends CommonActivity {
 
             mReference.child(key).setValue(usuario);
             mProgress.dismiss();
-
-            showToast("Conta Criada com Sucesso!");
             return true;
         } catch (Exception e) {
 
-            showToast("Erro ao Criar Nova Conta!");
+            showToastShort("Erro ao Criar Nova Conta!");
             e.printStackTrace();
             return false;
         }
+
+    }
+
+    private void enviarVerificacaoEmail() {
+
+        FirebaseAuth.getInstance().getCurrentUser()
+                .sendEmailVerification()
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if (task.isSuccessful())
+                            showToastLong("Enviamos um Email para: " + edtEmail.getText().toString() + ". Verifique sua Caixa de Entrada.");
+                        else
+                            showToastLong("Falha ao Enviar o Email de Verificação.");
+                    }
+                });
 
     }
 
@@ -180,7 +195,7 @@ public class CriarContaUsuarioActivity extends CommonActivity {
                     finish();
 
                 } else {
-                    showToast("Falha!");
+                    showToastShort("Falha!");
                     mAuth.signOut();
 
                     Intent intent = new Intent(CriarContaUsuarioActivity.this, LoginActivity.class);
@@ -193,16 +208,12 @@ public class CriarContaUsuarioActivity extends CommonActivity {
 
     }
 
+    private void voltarTelaLogin() {
 
-    private boolean verificarCampos() {
+        Intent intent = new Intent(CriarContaUsuarioActivity.this, LoginActivity.class);
+        startActivity(intent);
+        finish();
 
-        if (!TextUtils.isEmpty(edtNomeUsuario.toString()) || !TextUtils.isEmpty(edtEmail.toString()) || !TextUtils.isEmpty(edtSenha.toString())) {
-            showToast("Preencha os Campos de 'Nome', 'Email' e 'Senha'!");
-            edtNomeUsuario.requestFocus();
-            return false;
-        }
-
-        return true;
     }
 
 }

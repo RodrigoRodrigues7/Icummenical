@@ -154,7 +154,7 @@ public class DetalhesEventoActivity extends CommonActivity {
                 for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
 
                     postSnapshot.getRef().removeValue();
-                    showToast("Evento Removido com Sucesso!");
+                    showToastShort("Evento Removido com Sucesso!");
                     voltarMenuPrincipal();
 
                 }
@@ -176,7 +176,7 @@ public class DetalhesEventoActivity extends CommonActivity {
         photoReference.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void aVoid) {
-                showToast("Foto do Evento Removida!");
+                showToastShort("Foto do Evento Removida!");
             }
         });
 

@@ -125,7 +125,7 @@ public class EditarPerfilActivity extends CommonActivity {
             abrirTelaPrincipal();
 
         } else {
-            showToast("Por Favor, Verifique se a 'Senha' está Correta.");
+            showToastShort("Por Favor, Verifique se a 'Senha' está Correta.");
             senhaUsuario.requestFocus();
             senhaUsuario.setText("");
             confirmarSenhaUsuario.setText("");
@@ -167,7 +167,7 @@ public class EditarPerfilActivity extends CommonActivity {
             atualizarSenha(usuario.getSenha());
 
             databaseReference.child(txtKeyUsuario).setValue(usuario);
-            showToast("Sua Conta foi Atualizada!" + usuario.getNome());
+            showToastShort("Sua Conta foi Atualizada!" + usuario.getNome());
             finish();
 
         } catch (Exception e) {
@@ -210,7 +210,7 @@ public class EditarPerfilActivity extends CommonActivity {
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
-                showToast("Imagem Não Encontrada");
+                showToastShort("Imagem Não Encontrada");
             }
         });
 
