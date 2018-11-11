@@ -78,8 +78,6 @@
                     android:layout_width="300dp"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="8dp"
-                    android:layout_marginLeft="8dp"
-                    android:layout_marginRight="8dp"
                     android:layout_marginStart="8dp"
                     android:layout_marginTop="8dp"
                     android:background="@drawable/edittext_style"
@@ -91,12 +89,11 @@
 
                 <!-- Botões -->
                 <LinearLayout
+                    android:id="@+id/linearLayout3"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="32dp"
                     android:layout_marginEnd="8dp"
-                    android:layout_marginLeft="8dp"
-                    android:layout_marginRight="8dp"
                     android:layout_marginStart="8dp"
                     android:layout_marginTop="32dp"
                     android:gravity="center_horizontal"
@@ -119,8 +116,8 @@
                         android:layout_width="180dp"
                         android:layout_height="wrap_content"
                         android:background="@drawable/btn_style"
-                        android:text="Entrar"
                         android:drawableRight="@drawable/ic_arrow_forward"
+                        android:text="Entrar"
                         android:textAppearance="@style/TextAppearance.AppCompat.Medium.Inverse"
                         android:textColor="@color/white"
                         android:visibility="visible" />
@@ -162,11 +159,9 @@
                     <TextView
                         android:id="@+id/textView2"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_height="21dp"
                         android:layout_marginBottom="8dp"
                         android:layout_marginEnd="8dp"
-                        android:layout_marginLeft="8dp"
-                        android:layout_marginRight="8dp"
                         android:layout_marginStart="8dp"
                         android:layout_marginTop="12dp"
                         android:text="Acesse com suas Redes Sociais"
@@ -228,6 +223,22 @@
                     </LinearLayout>
 
                 </android.support.constraint.ConstraintLayout>
+
+                <TextView
+                    android:id="@+id/textViewRecuperarS"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginStart="8dp"
+                    android:text="Esqueceu a senha?"
+                    android:textColor="@color/colorPrimary"
+                    app:layout_constraintBottom_toTopOf="@+id/linearLayout3"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.887"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/edt_senhaLogin"
+                    app:layout_constraintVertical_bias="1.0" />
 
             </android.support.constraint.ConstraintLayout>
 

@@ -14,5 +14,10 @@
     <string name="fb_login_protocol_scheme">fb830603277276659</string>
 
     <string name="alertDialog_Text">Ao Clicar em Confirmar você irá excluir todos os seus dados salvos no Icummenical, etc. Deseja REALMENTE Excluir sua conta ?</string>
+    <string name="paypal_single_payment" />
+    <string name="paypal_future_payment" />
+    <string name="paypal_future_payment_address_scope" />
+    <string name="paypal_billing_agreement" />
+    <string name="payment_icon" />
 
 </resources>

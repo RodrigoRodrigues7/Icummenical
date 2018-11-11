@@ -108,6 +108,9 @@ public class PrincipalActivity extends CommonActivity implements NavigationView.
         } else if (id == R.id.nav_listarEventos) {
             Intent i = new Intent(PrincipalActivity.this, EventoActivity.class);
             startActivity(i);
+        } else if (id == R.id.nav_dizimo) {
+            Intent i = new Intent(PrincipalActivity.this, Dizimo.class);
+            startActivity(i);
         } else if (id == R.id.nav_cadastrarEvento) {
             Intent i = new Intent(PrincipalActivity.this, CadastrarEventoActivity.class);
             startActivity(i);

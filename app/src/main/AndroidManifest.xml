@@ -4,6 +4,10 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
         android:allowBackup="true"
@@ -69,7 +73,22 @@
         <activity android:name=".Activity.PerfilUsuarioActivity" />
         <activity android:name=".Activity.EditarPerfilActivity" />
         <activity android:name=".Activity.DetalhesEventoActivity" />
-        <activity android:name=".Activity.AtualizarEventoActivity"></activity>
+        <activity android:name=".Activity.AtualizarEventoActivity" />
+        <activity android:name=".Activity.Dizimo" />
+        <activity
+            android:name="com.braintreepayments.api.BraintreeBrowserSwitchActivity"
+            android:launchMode="singleTask">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data android:scheme="${applicationId}.braintree" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".Activity.PaymentDetails" />
+        <activity android:name=".Activity.ResetPasswordActivity"></activity>
     </application>
 
 </manifest>

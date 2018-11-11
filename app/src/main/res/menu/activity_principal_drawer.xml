@@ -13,6 +13,10 @@
             android:icon="@drawable/ic_dashboard"
             android:title="Listar Eventos" />
         <item
+            android:id="@+id/nav_dizimo"
+            android:icon="@android:drawable/ic_menu_month"
+            android:title="Oferta" />
+        <item
             android:id="@+id/nav_cadastrarEvento"
             android:icon="@drawable/ic_assignment"
             android:title="Cadastrar Evento" />

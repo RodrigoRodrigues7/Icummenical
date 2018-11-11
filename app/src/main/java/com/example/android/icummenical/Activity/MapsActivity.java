@@ -209,7 +209,7 @@ public void localizarIgrejas(){
     dataTransfer[1] = url;
 
     getNearbyPlacesData.execute(dataTransfer);
-   
+
 
 }
 

@@ -9,6 +9,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.android.icummenical.Classes.Usuario;
@@ -40,7 +41,7 @@ public class LoginActivity extends CommonActivity {
     private Button btnLogin, btnCriarNovaConta;
     private ProgressBar progressBar;
     private ImageView login_Facebook;
-
+    private TextView recuperarSenha;
     private FirebaseAuth mAuth;
     private Usuario usuario;
 
@@ -89,7 +90,7 @@ public class LoginActivity extends CommonActivity {
         edtSenha = findViewById(R.id.edt_senhaLogin);
         btnLogin = findViewById(R.id.btn_loginUsuario);
         btnCriarNovaConta = findViewById(R.id.btn_criarNovaConta);
-
+        recuperarSenha = findViewById(R.id.textViewRecuperarS);
         progressBar = findViewById(R.id.progressBarID);
         progressBar.setVisibility(View.GONE);
 
@@ -125,7 +126,12 @@ public class LoginActivity extends CommonActivity {
             });
 
         }
-
+recuperarSenha.setOnClickListener(new View.OnClickListener() {
+    @Override
+    public void onClick(View v) {
+        startActivity(new Intent(LoginActivity.this,ResetPasswordActivity.class));
+    }
+});
         btnCriarNovaConta.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
