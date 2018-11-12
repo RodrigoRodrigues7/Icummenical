@@ -69,7 +69,8 @@ EditText valor;
     private void processPayment() {
 
 valores = valor.getText().toString();
-        PayPalPayment payPalPayment =  new PayPalPayment(new BigDecimal(String.valueOf(valores)),"USD","Oferta",PayPalPayment.PAYMENT_INTENT_SALE);
+        PayPalPayment payPalPayment =  new PayPalPayment(new BigDecimal(String.valueOf(valores)),"USD","Oferta",
+                PayPalPayment.PAYMENT_INTENT_SALE);
         Intent intent = new Intent(this, PaymentActivity.class);
         intent.putExtra(PayPalService.EXTRA_PAYPAL_CONFIGURATION,config);
         intent.putExtra(PaymentActivity.EXTRA_PAYMENT,payPalPayment);
@@ -94,7 +95,7 @@ if(confirmation != null)
         startActivity(new Intent(this, PaymentDetails.class)
 
                 .putExtra("PaymentDetails",paymentDetails)
-                .putExtra("PaymentValor", (Parcelable) valor)
+                .putExtra("PaymentValor", valores)
 
         );
 
