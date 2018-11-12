@@ -1,8 +1,8 @@
 package com.example.android.icummenical.Activity;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -30,6 +30,7 @@ import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
 
 import java.io.ByteArrayOutputStream;
+import java.io.FileNotFoundException;
 
 public class EditarPerfilActivity extends CommonActivity {
 
@@ -92,17 +93,20 @@ public class EditarPerfilActivity extends CommonActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (resultCode == RESULT_OK) {
 
-        final int width = 300;
-        final int height = 300;
+            Uri uriTarget = data.getData();
+            Bitmap bitmap;
 
-        if (resultCode == Activity.RESULT_OK) {
-            if (requestCode == GALLERY_CODE) {
-                Uri imagemSelecionada = data.getData();
-                Picasso.with(EditarPerfilActivity.this).load(imagemSelecionada.toString()).resize(width, height).centerCrop().into(imgFotoPerfil);
+            try {
+
+                bitmap = BitmapFactory.decodeStream(getContentResolver().openInputStream(uriTarget));
+                imgFotoPerfil.setImageBitmap(bitmap);
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
             }
-        }
 
+        }
     }
 
 //--------------------------------------------------------------------------------------------------
@@ -121,7 +125,7 @@ public class EditarPerfilActivity extends CommonActivity {
             abrirTelaPrincipal();
 
         } else {
-            showToast("Por Favor, Verifique se a 'Senha' está Correta.");
+            showToastShort("Por Favor, Verifique se a 'Senha' está Correta.");
             senhaUsuario.requestFocus();
             senhaUsuario.setText("");
             confirmarSenhaUsuario.setText("");
@@ -163,7 +167,7 @@ public class EditarPerfilActivity extends CommonActivity {
             atualizarSenha(usuario.getSenha());
 
             databaseReference.child(txtKeyUsuario).setValue(usuario);
-            showToast("Sua Conta foi Atualizada!" + usuario.getNome());
+            showToastShort("Sua Conta foi Atualizada!" + usuario.getNome());
             finish();
 
         } catch (Exception e) {
@@ -206,7 +210,7 @@ public class EditarPerfilActivity extends CommonActivity {
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
-                showToast("Imagem Não Encontrada");
+                showToastShort("Imagem Não Encontrada");
             }
         });
 

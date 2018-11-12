@@ -15,7 +15,7 @@ public class Evento {
     public Evento() {
     }
 
-    public Evento(String titulo, String data, String horario, String local, String descricao, String atividades, String keyEvento, String uid, String nomeModerador) {
+    public Evento(String titulo, String data, String horario, String local, String descricao, String atividades, String keyEvento) {
         this.titulo = titulo;
         this.data = data;
         this.horario = horario;
@@ -23,8 +23,6 @@ public class Evento {
         this.descricao = descricao;
         this.atividades = atividades;
         this.keyEvento = keyEvento;
-        this.uid = uid;
-        this.nomeModerador = nomeModerador;
     }
 
     public String getTitulo() {

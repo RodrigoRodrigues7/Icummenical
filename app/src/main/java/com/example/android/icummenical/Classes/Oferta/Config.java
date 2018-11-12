@@ -5,5 +5,5 @@ package com.example.android.icummenical.Classes.Oferta;
  */
 
 public class Config {
-    public static final String PAYPAL_CLIENT_ID = "AVF1VC77cSGzwDvlQ8GCTJxWAeeTpu4nwEUipdRlrOV1i_zMLx_ZjwO0uyEq-2ofbFo409eyVIh1E5IY";
+    public static final String PAYPAL_CLIENT_ID = "AfbguVp02_BvXDkaV77hCtkhkQz3pA80_PwbWosh46D8vBdZqSQ080wKprmx8VQIZd9Aeh--XmY7qU5z";
 }

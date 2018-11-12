@@ -52,17 +52,16 @@ public class ResetPasswordActivity extends AppCompatActivity {
                                     Toast.makeText(ResetPasswordActivity.this, "E-mail enviado", Toast.LENGTH_SHORT).show();
                                     startActivity(new Intent(ResetPasswordActivity.this,LoginActivity.class));
                                 }
-else
-    {
-        String message = task.getException().getMessage();
-        Toast.makeText(ResetPasswordActivity.this, "Erro" + message, Toast.LENGTH_SHORT).show();
-    }
+                                else
+                                    {
+
+                                     Toast.makeText(ResetPasswordActivity.this, "E-mail não cadastrado", Toast.LENGTH_SHORT).show();
+                                     }
                             }
                         });
                     }
             }
         });
-
 
     }
 }

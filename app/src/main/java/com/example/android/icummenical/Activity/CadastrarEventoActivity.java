@@ -1,10 +1,10 @@
 package com.example.android.icummenical.Activity;
 
-import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
@@ -27,17 +27,14 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
 
 import java.io.ByteArrayOutputStream;
+import java.io.FileNotFoundException;
 import java.text.DateFormat;
 import java.util.Calendar;
 
@@ -110,12 +107,12 @@ public class CadastrarEventoActivity extends CommonActivity implements DatePicke
             public void onClick(View v) {
                 try {
                     if (verificarCampos() == false) {
-                        showToast("Preencha Todos os Campos!");
+                        showToastShort("Preencha Todos os Campos!");
                     } else {
                         registrarEvento();
                     }
                 } catch (Exception error) {
-                    showToast("Erro: " + error.getMessage());
+                    showToastShort("Erro: " + error.getMessage());
                 }
             }
         });
@@ -132,14 +129,19 @@ public class CadastrarEventoActivity extends CommonActivity implements DatePicke
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
-        final int width = 300;
-        final int height = 300;
+        if (resultCode == RESULT_OK) {
 
-        if (resultCode == Activity.RESULT_OK) {
-            if (requestCode == GALLERY_CODE) {
-                Uri imagemSelecionada = data.getData();
-                Picasso.with(CadastrarEventoActivity.this).load(imagemSelecionada.toString()).resize(width, height).centerCrop().into(imgFotoEvento);
+            Uri uriTarget = data.getData();
+            Bitmap bitmap;
+
+            try {
+
+                bitmap = BitmapFactory.decodeStream(getContentResolver().openInputStream(uriTarget));
+                imgFotoEvento.setImageBitmap(bitmap);
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
             }
+
         }
 
     }
@@ -171,8 +173,8 @@ public class CadastrarEventoActivity extends CommonActivity implements DatePicke
     }
 
     private void selecionarFotoEvento() {
-        Intent abrirGaleria = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI);
-        startActivityForResult(Intent.createChooser(abrirGaleria, "Selecione uma Imagen: "), GALLERY_CODE);
+        Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        startActivityForResult(intent, GALLERY_CODE);
     }
 
     private void carregarFotoEvento() {
@@ -192,7 +194,7 @@ public class CadastrarEventoActivity extends CommonActivity implements DatePicke
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
-                showToast("Imagem Não Encontrada");
+                showToastShort("Imagem Não Encontrada");
             }
         });
 
@@ -252,11 +254,11 @@ public class CadastrarEventoActivity extends CommonActivity implements DatePicke
 
             databaseReference.child(key).setValue(evento);
 //            databaseReference.push().setValue(evento);
-            showToast("Evento Registrado com Sucesso!");
+            showToastShort("Evento Registrado com Sucesso!");
             return true;
 
         } catch (Exception e) {
-            showToast("Errro ao Registrar o Evento!");
+            showToastShort("Errro ao Registrar o Evento!");
             e.printStackTrace();
             return false;
 
@@ -267,19 +269,19 @@ public class CadastrarEventoActivity extends CommonActivity implements DatePicke
     private boolean verificarCampos() {
 
         if (edtTitulo.getText().toString().trim().equals("")) {
-            showToast("Preencha o Campo do Título!");
+            showToastShort("Preencha o Campo do Título!");
             return false;
         } else if (edtData.getText().toString().trim().equals("") || edtHorario.getText().toString().trim().equals("")) {
-            showToast("Preencha os Campos de Data e Horario!");
+            showToastShort("Preencha os Campos de Data e Horario!");
             return false;
         } else if (edtLocal.getText().toString().trim().equals("")) {
-            showToast("Preencha o Campo do Local!");
+            showToastShort("Preencha o Campo do Local!");
             return false;
         } else if (edtDescricao.getText().toString().trim().equals("")) {
-            showToast("Preencha o Campo da Descrição!");
+            showToastShort("Preencha o Campo da Descrição!");
             return false;
         } else if (edtAtividades.getText().toString().trim().equals("")) {
-            showToast("Preencha o Campo das Atividades!");
+            showToastShort("Preencha o Campo das Atividades!");
             return false;
         }
 
