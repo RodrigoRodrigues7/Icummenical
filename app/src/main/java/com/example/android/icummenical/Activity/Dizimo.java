@@ -57,19 +57,29 @@ EditText valor;
         btn_Pay = (Button)findViewById(R.id.btn_Pay);
         valor = (EditText)findViewById(R.id.valores);
 
+
         btn_Pay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (valor.getText().toString().trim().equals("")|| valor.length()>4) {
+                    valor.setError("Valor inválido");
+                    valor.requestFocus();
+
+
+                }else
                 processPayment();
+
             }
         });
 
     }
 
+
     private void processPayment() {
 
+
 valores = valor.getText().toString();
-        PayPalPayment payPalPayment =  new PayPalPayment(new BigDecimal(String.valueOf(valores)),"USD","Oferta",
+        PayPalPayment payPalPayment =  new PayPalPayment(new BigDecimal(String.valueOf(valores)),"BRL","Oferta",
                 PayPalPayment.PAYMENT_INTENT_SALE);
         Intent intent = new Intent(this, PaymentActivity.class);
         intent.putExtra(PayPalService.EXTRA_PAYPAL_CONFIGURATION,config);

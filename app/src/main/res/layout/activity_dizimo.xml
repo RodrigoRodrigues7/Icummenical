@@ -27,11 +27,13 @@ android:orientation="vertical"
             android:layout_height="wrap_content" />
 
 
-<Button
-    android:id="@+id/btn_Pay"
-    android:text="PAY"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content" />
+        <Button
+            android:id="@+id/btn_Pay"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/btn_style"
+            android:text="Enviar Pagamento"
+            android:textColor="@color/cardview_light_background" />
 
 
 
