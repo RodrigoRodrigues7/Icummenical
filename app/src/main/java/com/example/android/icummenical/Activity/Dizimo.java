@@ -3,16 +3,24 @@ package com.example.android.icummenical.Activity;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Parcelable;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 
 import com.example.android.icummenical.Classes.Oferta.Config;
 import com.example.android.icummenical.R;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.paypal.android.sdk.payments.PayPalConfiguration;
 import com.paypal.android.sdk.payments.PayPalPayment;
 import com.paypal.android.sdk.payments.PayPalPaymentDetails;
@@ -23,6 +31,8 @@ import com.paypal.android.sdk.payments.PaymentConfirmation;
 import org.json.JSONException;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Dizimo extends AppCompatActivity {
 
@@ -32,10 +42,10 @@ public class Dizimo extends AppCompatActivity {
             .environment(PayPalConfiguration.ENVIRONMENT_SANDBOX)
             .clientId(Config.PAYPAL_CLIENT_ID);
 
-Button btn_Pay;
-String valores ="";
-EditText valor;
-
+private Button btn_Pay;
+private String valores ="";
+private EditText valor;
+private Spinner spinner;
 
     @Override
     protected void onDestroy() {
@@ -49,6 +59,7 @@ EditText valor;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dizimo);
 
+
         Intent intent = new Intent(this,PayPalService.class);
         intent.putExtra(PayPalService.EXTRA_PAYPAL_CONFIGURATION,config);
         startService(intent);
@@ -56,6 +67,9 @@ EditText valor;
 
         btn_Pay = (Button)findViewById(R.id.btn_Pay);
         valor = (EditText)findViewById(R.id.valores);
+        spinner = (Spinner)findViewById(R.id.spinnerIgrejas);
+
+
 
 
         btn_Pay.setOnClickListener(new View.OnClickListener() {
@@ -79,7 +93,7 @@ EditText valor;
 
 
 valores = valor.getText().toString();
-        PayPalPayment payPalPayment =  new PayPalPayment(new BigDecimal(String.valueOf(valores)),"BRL","Oferta",
+        PayPalPayment payPalPayment =  new PayPalPayment(new BigDecimal(String.valueOf(valores)),"BRL","Valor Ofertado!",
                 PayPalPayment.PAYMENT_INTENT_SALE);
         Intent intent = new Intent(this, PaymentActivity.class);
         intent.putExtra(PayPalService.EXTRA_PAYPAL_CONFIGURATION,config);
@@ -117,11 +131,11 @@ if(confirmation != null)
 }
 else if(resultCode == Activity.RESULT_CANCELED)
 
-        Toast.makeText(this, "Cancel", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "Cancelado", Toast.LENGTH_SHORT).show();
 
 
             }else if(resultCode ==  PaymentActivity.RESULT_EXTRAS_INVALID)
-                Toast.makeText(this, "Invalid", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Valor Inválido", Toast.LENGTH_SHORT).show();
         }
     }
 }

@@ -82,7 +82,10 @@ public class AtualizarEventoActivity extends CommonActivity implements DatePicke
         btnSalvarEvento.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 atualizarEvento();
+
+
             }
         });
 
@@ -305,8 +308,8 @@ public class AtualizarEventoActivity extends CommonActivity implements DatePicke
     }
 
     private void voltarMenuPrincipal() {
-        Intent voltarMenu = new Intent(getApplicationContext(), PrincipalActivity.class);
-        startActivity(voltarMenu);
+        Intent menuPrincipal = new Intent(AtualizarEventoActivity.this, PrincipalActivity.class);
+        startActivity(menuPrincipal);
         finish();
     }
 

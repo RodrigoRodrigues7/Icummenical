@@ -19,7 +19,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
-public class EventoActivity extends CommonActivity {
+public class ListaEventoActivity extends CommonActivity {
 
     private RecyclerView mRecyclerView;
     private Adapter adapter;

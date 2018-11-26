@@ -1,8 +1,29 @@
-<fragment xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:map="http://schemas.android.com/apk/res-auto"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/map"
-    android:name="com.google.android.gms.maps.SupportMapFragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.android.icummenical.Activity.MapsActivity" />
+
+    tools:context="com.example.android.icummenical.Activity.MapsActivity">
+
+<fragment
+android:id="@+id/map"
+android:name="com.google.android.gms.maps.SupportMapFragment"
+android:layout_width="match_parent"
+android:layout_height="match_parent"/>
+
+   <!-- <android.support.design.widget.BottomNavigationView
+        android:id="@+id/navButton"
+        android:layout_width="match_parent"
+
+
+        android:layout_height="40dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+
+        app:itemBackground="@color/transparent"
+        app:itemIconTint="@drawable/nav_selector"
+        app:itemTextColor="@color/colorPrimaryDark"
+        app:menu="@menu/button_menu"></android.support.design.widget.BottomNavigationView>-->
+    </RelativeLayout>

@@ -61,6 +61,7 @@ public class CadastrarEventoActivity extends CommonActivity implements DatePicke
         databaseReference = ConfigFirebase.getDatabaseReference();
         storageReference = ConfigFirebase.getStorageReference();
         mAuth = ConfigFirebase.getFirebaseAuth();
+        //pegando usuario  corrente
         usuarioAtual = mAuth.getCurrentUser();
 
         imgFotoEvento = findViewById(R.id.img_FotoEvento);

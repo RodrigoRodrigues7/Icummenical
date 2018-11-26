@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    >
+<!--<item
+    android:id="@+id/action_market"
+    android:enabled="true"
+    android:icon="@drawable/ic_local_grocery_store_black_24dp"
+    android:title="Market"
+    app:showAsAction="ifRoom">
+
+</item>-->
+    <item
+        android:id="@+id/action_church"
+        android:enabled="true"
+        android:icon="@drawable/ic_action_igreja"
+        android:title="Igrejas"
+        app:showAsAction="ifRoom">
+
+    </item>
+<!--    &lt;!&ndash;<item
+        android:id="@+id/action_hospital"
+        android:enabled="true"
+        android:icon="@drawable/ic_local_hospital_black_24dp"
+        android:title="Hospital"
+        app:showAsAction="ifRoom">
+
+    </item>-->
+<!--    <item
+        android:id="@+id/action_restaurante"
+        android:enabled="true"
+        android:icon="@drawable/ic_restaurant_black_24dp"
+        android:title="Restaurante"
+        app:showAsAction="ifRoom">
+
+    </item>&ndash;&gt;-->
+</menu>

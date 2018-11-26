@@ -61,6 +61,7 @@ public class DetalhesEventoActivity extends CommonActivity {
             @Override
             public void onClick(View v) {
                 atualizarEvento();
+
             }
         });
 
@@ -227,7 +228,7 @@ public class DetalhesEventoActivity extends CommonActivity {
     }
 
     private void voltarMenuPrincipal() {
-        Intent menuPrincipal = new Intent(DetalhesEventoActivity.this, PrincipalActivity.class);
+        Intent menuPrincipal = new Intent(DetalhesEventoActivity.this, ListaEventoActivity.class);
         startActivity(menuPrincipal);
         finish();
     }

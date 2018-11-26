@@ -8,7 +8,9 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
+import android.support.design.widget.TabLayout;
 import android.support.v4.view.GravityCompat;
+import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
@@ -21,6 +23,7 @@ import android.widget.TextView;
 
 import com.example.android.icummenical.Classes.Usuario;
 import com.example.android.icummenical.DAO.ConfigFirebase;
+import com.example.android.icummenical.Fragments.tabPageAdapter;
 import com.example.android.icummenical.Helper.CommonActivity;
 import com.example.android.icummenical.R;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -46,11 +49,17 @@ public class PrincipalActivity extends CommonActivity implements NavigationView.
     private FirebaseAuth mAuth;
     private DatabaseReference databaseReference;
 
+    TabLayout tabLayout;
+    ViewPager viewPager;
+    tabPageAdapter  tabPageAdapter;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_principal);
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -69,6 +78,9 @@ public class PrincipalActivity extends CommonActivity implements NavigationView.
         nomeUsuario = view.findViewById(R.id.txt_nomeUsuarioHeader);
         emailUsuario = view.findViewById(R.id.txt_emailUsuarioHeader);
         imgUsuario = view.findViewById(R.id.img_fotoUsuarioHeader);
+
+
+
 
         preencherNavHeader();
         navigationView.setNavigationItemSelectedListener(this);
@@ -181,7 +193,7 @@ public class PrincipalActivity extends CommonActivity implements NavigationView.
             Intent i = new Intent(PrincipalActivity.this, MapsActivity.class);
             startActivity(i);
         } else if (id == R.id.nav_listarEventos) {
-            Intent i = new Intent(PrincipalActivity.this, EventoActivity.class);
+            Intent i = new Intent(PrincipalActivity.this, ListaEventoActivity.class);
             startActivity(i);
         } else if (id == R.id.nav_dizimo) {
             Intent i = new Intent(PrincipalActivity.this, Dizimo.class);
