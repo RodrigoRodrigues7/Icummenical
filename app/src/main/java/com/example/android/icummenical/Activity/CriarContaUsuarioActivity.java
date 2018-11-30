@@ -7,6 +7,7 @@ import android.support.annotation.NonNull;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.example.android.icummenical.Classes.Usuario;
 import com.example.android.icummenical.DAO.ConfigFirebase;
@@ -59,8 +60,26 @@ public class CriarContaUsuarioActivity extends CommonActivity {
             @Override
             public void onClick(View v) {
 
+
                 closeKeyboard();
-                if (edtSenha.getText().toString().equals(edtSenhaConfirm.getText().toString())) {
+
+
+                if (edtNomeUsuario.getText().toString().trim().equals("")) {
+                    edtNomeUsuario.setError("Informe o nome");
+                    edtNomeUsuario.requestFocus();
+
+                } else if (edtEmail.getText().toString().trim().equals("")) {
+                    edtEmail.setError("informe o e-mail");
+                    edtEmail.requestFocus();
+
+                } else if (edtSenha.getText().toString().trim().equals("")) {
+                    edtSenha.setError("informe sua senha");
+                    edtSenha.requestFocus();
+                } else if (edtSenhaConfirm.getText().toString().trim().equals("")) {
+                    edtSenhaConfirm.setError("informe sua senha");
+                    edtSenhaConfirm.requestFocus();
+                }
+                 else if (edtSenha.getText().toString().equals(edtSenhaConfirm.getText().toString())) {
 
                     mProgress.setTitle("Criando Nova Conta");
                     mProgress.setMessage("Estamos Registrando sua Conta, Aguarde um Momento ...");
@@ -109,14 +128,17 @@ public class CriarContaUsuarioActivity extends CommonActivity {
 
                 if (task.isSuccessful()) {
 
-                    enviarVerificacaoEmail();
-                    inserirNovoUsuario();
-                    mAuth.signOut();
 
-                    voltarTelaLogin();
-                    finish();
+                        enviarVerificacaoEmail();
+                        inserirNovoUsuario();
+                        mAuth.signOut();
+
+                        voltarTelaLogin();
+                        finish();
+
 
                 } else {
+
 
                     String error = "";
                     try {
@@ -135,14 +157,16 @@ public class CriarContaUsuarioActivity extends CommonActivity {
                         mProgress.dismiss();
                         e.printStackTrace();
                     }
+                    Toast.makeText(CriarContaUsuarioActivity.this, "Erro: " + error, Toast.LENGTH_SHORT).show();
 
-                    showToastLong("Erro: " + error);
+
                 }
 
             }
         });
 
     }
+
 
     private boolean inserirNovoUsuario() {
 

@@ -60,6 +60,8 @@ public class EditarPerfilActivity extends CommonActivity {
         senhaUsuario = findViewById(R.id.edt_senhaUsuarioAtualizar);
         confirmarSenhaUsuario = findViewById(R.id.edt_confirmarSenhaUsuarioAtualizar);
 
+
+
         btnSalvarPerfil = findViewById(R.id.btn_salvarPerfil);
         btnCancelar = findViewById(R.id.btn_cancelarAtualizacaoPerfil);
 
@@ -114,21 +116,30 @@ public class EditarPerfilActivity extends CommonActivity {
     private void salvarDadosPerfil() {
 
         closeKeyboard();
-        if (senhaUsuario.getText().toString().equals(confirmarSenhaUsuario.getText().toString())) {
+
+        if (senhaUsuario.getText().toString().trim().equals("")) {
+            senhaUsuario.setError("informe sua senha atual ou uma nova senha");
+            senhaUsuario.requestFocus();
+
+        } else if (confirmarSenhaUsuario.getText().toString().trim().equals("")) {
+            confirmarSenhaUsuario.setError("confirme a senha");
+            confirmarSenhaUsuario.requestFocus();
+
+        } else if (senhaUsuario.getText().toString().equals(confirmarSenhaUsuario.getText().toString())) {
             Usuario usuario = new Usuario();
             usuario.setNome(nomeUsuario.getText().toString());
             usuario.setSenha(senhaUsuario.getText().toString());
             usuario.setEmail(txtEmail.toString());
             usuario.setKeyUsuario(txtKeyUsuario);
-
+            Intent voltarMenu = new Intent(EditarPerfilActivity.this, PerfilUsuarioActivity.class);
+            startActivity(voltarMenu);
+            finish();
             updateUsuario(usuario);
-            abrirTelaPrincipal();
 
-        } else {
-            showToastShort("Por Favor, Verifique se a 'Senha' está Correta.");
-            senhaUsuario.requestFocus();
-            senhaUsuario.setText("");
-            confirmarSenhaUsuario.setText("");
+
+
+
+
         }
 
     }
@@ -164,6 +175,7 @@ public class EditarPerfilActivity extends CommonActivity {
 
         try {
             databaseReference = ConfigFirebase.getDatabaseReference().child("usuarios");
+
             atualizarSenha(usuario.getSenha());
 
             databaseReference.child(txtKeyUsuario).setValue(usuario);
@@ -233,7 +245,7 @@ public class EditarPerfilActivity extends CommonActivity {
     }
 
     private void abrirTelaPrincipal() {
-        Intent voltarMenu = new Intent(EditarPerfilActivity.this, PrincipalActivity.class);
+        Intent voltarMenu = new Intent(EditarPerfilActivity.this, PerfilUsuarioActivity.class);
         startActivity(voltarMenu);
         finish();
     }

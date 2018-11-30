@@ -1,5 +1,6 @@
 package com.example.android.icummenical.Activity;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -11,6 +12,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.android.icummenical.Classes.Usuario;
 import com.example.android.icummenical.DAO.ConfigFirebase;
@@ -56,6 +58,7 @@ public class PerfilUsuarioActivity extends CommonActivity {
 
         //Operação que seleciona no database o usuario com o 'emailUsuarioLogado' e preenche os dados dele nos TextView's
         databaseReference.child("usuarios").orderByChild("email").equalTo(emailUsuarioLogado).addValueEventListener(new ValueEventListener() {
+
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
@@ -92,7 +95,9 @@ public class PerfilUsuarioActivity extends CommonActivity {
         btnExcluirConta.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                excluirContaDeslogar();
+               excluirContaDeslogar();
+               // Toast.makeText(PerfilUsuarioActivity.this, "Testando", Toast.LENGTH_SHORT).show();
+
             }
         });
         btnVoltarMenu.setOnClickListener(new View.OnClickListener() {
@@ -159,26 +164,32 @@ public class PerfilUsuarioActivity extends CommonActivity {
 
                     final Usuario usuario = postSnapshot.getValue(Usuario.class);
                     FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                    Toast.makeText(PerfilUsuarioActivity.this, "Passou aqui e não entra no metodo delete", Toast.LENGTH_SHORT).show();
+                    //Não entra no delete
 
                     //Removendo o usuário do 'Authentication'
-                    user.delete().addOnCompleteListener(new OnCompleteListener<Void>() {
-                        @Override
-                        public void onComplete(@NonNull Task<Void> task) {
-                            if (task.isSuccessful()) {
-                                Log.d("USUARIO_EXCLUIDO", "-----------------> Conta de Usuário Excluída <-----------------");
 
-                                databaseReference = ConfigFirebase.getDatabaseReference();
-                                databaseReference.child("usuarios").child(usuario.getKeyUsuario()).removeValue();
-                                mAuth.signOut();
+                        user.delete().addOnCompleteListener(new OnCompleteListener<Void>() {
+                            @Override
+                            public void onComplete(@NonNull Task<Void> task) {
+                                if (task.isSuccessful()) {
+                                 //   Log.d("USUARIO_EXCLUIDO", "-----------------> Conta de Usuário Excluída <-----------------");
 
-                                showToastShort("Conta Removida Com Sucesso!!!");
-                                abrirTelaLogin();
+                                    databaseReference = ConfigFirebase.getDatabaseReference();
+                                    databaseReference.child("usuarios").child(usuario.getKeyUsuario()).removeValue();
+                                    mAuth.signOut();
+
+                                    Toast.makeText(PerfilUsuarioActivity.this, "Passou aqui 1", Toast.LENGTH_SHORT).show();
+                                    showToastShort("Conta Removida Com Sucesso!!!");
+
+                                    abrirTelaLogin();
+                                }
                             }
-                        }
-                    });
+                        });
+                    }
 
                 }
-            }
+
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {

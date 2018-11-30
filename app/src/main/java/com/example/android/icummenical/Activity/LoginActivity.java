@@ -113,16 +113,25 @@ public class LoginActivity extends CommonActivity {
                         usuario.setEmail(edtEmail.getText().toString());
                         usuario.setSenha(edtSenha.getText().toString());
 
-                        validarLogin();
-                        closeKeyboard();
-                        btnLogin.setVisibility(View.GONE);
-                        progressBar.setVisibility(View.VISIBLE);
 
-                    } else {
-                        Toast.makeText(LoginActivity.this, "Por Favor, Preencha os Campos de E-mail e Senha!", Toast.LENGTH_SHORT).show();
+
+                   validarLogin();
+                   closeKeyboard();
+                   btnLogin.setVisibility(View.GONE);
+                   progressBar.setVisibility(View.VISIBLE);
+
+
+                    } else if (edtEmail.getText().toString().trim().equals("")) {
+                        edtEmail.setError("informe o e-mail");
+                        edtEmail.requestFocus();
+
+                    } else if (edtSenha.getText().toString().trim().equals("")) {
+                        edtSenha.setError("informe sua senha");
+                        edtSenha.requestFocus();
+                     //   Toast.makeText(LoginActivity.this, "Por Favor, Preencha os Campos de E-mail e Senha!", Toast.LENGTH_SHORT).show();
                     }
 
-                }
+               }
             });
 
         }
